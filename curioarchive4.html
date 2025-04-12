@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurioArchive</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: -200px; /* Completely hidden off-screen */
+            transition: left 0.4s ease; /* Smooth transition for sliding */
+        }
+        .sidebar.open {
+            left: 0; /* Make sidebar visible when 'open' class is added */
+        }
+        .sidebar h2 {
+            font-size: 1.9em;
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 1;
+            flex: 2;
+            transition: margin-left 0.4s ease; /* Smooth transition for content shifting */
+        }
+        .main-content.sidebar-open {
+            margin-left: 200px; /* Push content to the right when sidebar is open */
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 40px;
+            background: white;
+            color: black;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 170px;
+            margin-right: 20px;
+            margin-left : 20px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive; /* Apply the Pacifico font to CurioArchive */
+            font-size: 2.5em; /* Increased size of the text */
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .navbar button:hover {
+            background: #ddd;
+        }
+
+        /* Search Box */
+        #searchInput {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            width: 300px; /* Increased width of search box */
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #6200ea, #0d47a1);
+            color: white;
+        }
+        .hero h2 {
+            font-size: 2.5em;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Category */
+        .category {
+            color: white;
+            padding: 60px; /* Increased height */
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            background-size: cover;
+            background-position: center;
+            height: 200px; /* Set a fixed height for the categories */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none; /* Remove underline */
+        }
+
+        .category:hover {
+            transform: scale(1.1);
+        }
+
+        /* Category Background Images */
+        .category:nth-child(1) {
+            background-image: url('images/history.jpg'); /* Replace with actual path to image */
+        }
+        .category:nth-child(2) {
+            background-image: url('images/geography.jpg');
+        }
+        .category:nth-child(3) {
+            background-image: url('images/astronomy.jpg');
+        }
+        .category:nth-child(4) {
+            background-image: url('images/science.jpg');
+        }
+        .category:nth-child(5) {
+            background-image: url('images/current_affairs.jpg');
+        }
+        .category:nth-child(6) {
+            background-image: url('images/books.jpg');
+        }
+        .category:nth-child(7) {
+            background-image: url('images/learning_tamil.jpg');
+        }
+        .category:nth-child(8) {
+            background-image: url('images/sports.jpg');
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #222;
+            color: white;
+        }
+
+        /* Social Media Links */
+        .social-media {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+        .social-media a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .social-media a:nth-child(2) { color: red; } /* YouTube */
+        .social-media a:nth-child(3) { color: #1877f2; } /* Facebook */
+        .social-media a:nth-child(4) { color: #e1306c; } /* Instagram */
+        .social-media a:nth-child(5) { color: #1da1f2; } /* X */
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li>History</li>
+            <li>Geography</li>
+            <li>Astronomy</li>
+            <li>Science</li>
+            <li>Current Affairs</li>
+            <li>Books</li>
+            <li>Learning Tamil</li>
+            <li>Sports</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button> <!-- Three dot button -->
+                <img src="C:\Users\ADMIN\Desktop\curioarchive\curioarchivelogo.png" alt="CurioArchive Logo">
+                <h1>CurioArchive</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search...">
+            </div>
+            <button id="toggleMode">Dark Mode</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="hero">
+            <h2>Welcome to CurioArchive</h2>
+            <p>Explore History, Geography, Astronomy, Science, and More!</p>
+        </header>
+
+        <!-- Categories -->
+        <section class="categories">
+            <a href="#history" class="category">History</a>
+            <a href="#geography" class="category">Geography</a>
+            <a href="#astronomy" class="category">Astronomy</a>
+            <a href="#science" class="category">Science</a>
+            <a href="#currentAffairs" class="category">Current Affairs</a>
+            <a href="#books" class="category">Books</a>
+            <a href="#learningTamil" class="category">Learning Tamil</a>
+            <a href="#sports" class="category">Sports</a>
+        </section>
+
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <p>Follow Us On:</p>
+            <a href="https://youtube.com" target="_blank">YouTube</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://twitter.com" target="_blank">X</a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle sidebar visibility
+        const toggleSidebarButton = document.getElementById("toggleSidebar");
+        const sidebar = document.querySelector(".sidebar");
+        const mainContent = document.querySelector(".main-content");
+
+        toggleSidebarButton.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            mainContent.classList.toggle("sidebar-open");
+        });
+
+        // Dark mode toggle
+        const toggleButton = document.getElementById("toggleMode");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            toggleButton.textContent = document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
+        });
+
+        // Search function
+        document.getElementById("searchInput").addEventListener("input", function () {
+            let filter = this.value.toLowerCase();
+            let categories = document.querySelectorAll(".category");
+            categories.forEach(category => {
+                let text = category.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    category.style.display = "block";
+                } else {
+                    category.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
