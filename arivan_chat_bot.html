@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>அறிவன் - CurioArchive Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background: #1c1b2f;
+      color: white;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .chat-header {
+      padding: 20px;
+      text-align: center;
+      background: #6a0dad;
+      font-size: 1.8em;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .back-button {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 60%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #8244f3;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #373660;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 15px 20px;
+      background: #2c2b45;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 20px;
+      border: none;
+      font-size: 1em;
+    }
+
+    .chat-send-btn {
+      background: #8244f3;
+      color: white;
+      border: none;
+      margin-left: 10px;
+      padding: 12px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .chat-send-btn:hover {
+      background: #9a6efb;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <button class="back-button" onclick="goBack()">←</button>
+      🤖 அறிவன்
+    </div>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">hi...how are you?</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" id="userInput" placeholder="Type your message..." />
+      <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const chatBox = document.getElementById('chatBox');
+
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      userMessage.innerText = message;
+      chatBox.appendChild(userMessage);
+
+      input.value = '';
+
+      setTimeout(() => {
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot';
+        botMessage.innerText = 'get you soon';
+        chatBox.appendChild(botMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
