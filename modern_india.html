@@ -134,7 +134,7 @@
             }
         }
 
-        .categories-container { /* New container added */
+        .categories-container {
             text-align: center;
             padding: 20px;
         }
@@ -146,7 +146,7 @@
 
         .categories {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             padding: 40px;
             text-align: center;
@@ -172,7 +172,7 @@
             transition: transform 0.3s;
             background-size: cover;
             background-position: center;
-            height: 600px;
+            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -196,10 +196,16 @@
                 transform: scale(1);
             }
         }
-
-        .category:nth-child(1) { background-image: url('images/ancient_india.jfif'); }
-        .category:nth-child(2) { background-image: url('images/medieval_india.jfif'); }
-        .category:nth-child(3) { background-image: url('images/modern_india.jfif'); }
+        .category:nth-child(1) { background-image: url('images/advent_of_europeans.png'); }
+        .category:nth-child(2) { background-image: url('images/.png'); }
+        .category:nth-child(3) { background-image: url('images/.png'); }
+        .category:nth-child(4) { background-image: url('images/.png'); }
+        .category:nth-child(5) { background-image: url('images/.png'); }
+        .category:nth-child(6) { background-image: url('images/.png'); }
+        .category:nth-child(7) { background-image: url('images/.png'); }
+        .category:nth-child(8) { background-image: url('images/.png'); }
+        .category:nth-child(9) { background-image: url('images/.png'); }
+        .category:nth-child(10) { background-image: url('images/.jpg'); }
 
         .social-media {
             text-align: center;
@@ -249,7 +255,6 @@
         #modeIcon{
             font-size: 3em;
         }
-
         .back-button-container {
           padding: 10px 40px;
           background: white;
@@ -281,9 +286,7 @@
             <li><a href="#books">Books</a></li>
             <li><a href="#learningTamil">Learning Tamil</a></li>
             <li><a href="#sports">Sports</a></li>
-
             <li><a href="arivan_chat_bot.html">Arivan</a></li>
-
             <li><a href="about_us.html">About Us</a></li>
             <li><a href="contact.html">Contact Us</a></li>
         </ul>
@@ -301,15 +304,23 @@
         </nav>
 
         <div class="back-button-container">
-            <a href="history.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+            <a href="division_of_indian_history.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="categories-container">
-            <h2 class="categories-heading">Division of Indian History</h2>
+            <h2 class="categories-heading">Modern India</h2>
             <section class="categories">
-                <a href="ancient_india.html" class="category"></a>
-                <a href="#medievalIndia" class="category"></a>
-                <a href="modern_india.html" class="category"></a>
+                <a href="advent_of_europeans.html" class="category"></a>
+                <a href="#prehistoricIndia" class="category">2</a>
+                <a href="#arrival_of_aryans" class="category">3</a>
+                <a href="#history_of_vedic_age" class="category">4</a>
+                <a href="#the_age_of_mahajanapadas" class="category">5</a>
+                <a href="#pre_mauryan_age" class="category">6</a>
+                <a href="#mauryan_age" class="category">7</a>
+                <a href="#post_mauryan_age" class="category">8</a>
+                <a href="#gupta_age" class="category">9</a>
+                <a href="#vakataka" class="category">10</a>
+
             </section>
         </div>
 
