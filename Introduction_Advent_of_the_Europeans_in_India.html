@@ -142,7 +142,6 @@
         .categories-heading {
             font-size: 2em;
             margin-bottom: 20px;
-            font-weight: bold;
         }
 
         .categories {
@@ -158,7 +157,7 @@
         .category {
             color: #333;
             padding: 10px 0;
-            font-size: 1.2em;
+            font-size: 1.6em;
             border-bottom: 1px solid #ddd;
             cursor: pointer;
             transition: background 0.3s;
@@ -261,164 +260,23 @@
             font-size: 3em;
         }
         .back-button-container {
-          padding: 10px 40px;
-          background: white;
-          display: flex;
-          justify-content: space-between; /* Changed to space-between */
-          align-items: center; /* Vertically align items */
-        }
-        .back-button {
-          background: none;
-          border: none;
-          font-size: 1.5em;
-          cursor: pointer;
-          text-decoration: none;
-          color: black;
-          font-weight: bold;
-          /* Removed display: none; */
-        }
-
-        #advent-europeans-box {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            background-color: white;
-        }
-
-        #advent-europeans-box p,
-        #advent-europeans-box ul {
-            margin-bottom: 1em;
-            line-height: 1.5;
-        }
-
-        #advent-europeans-box ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-
-        #advent-europeans-box li {
-            margin-bottom: 0.5em;
-        }
-
-        #advent-europeans-box h2 {
-            font-size: 1.2em;
-            margin-bottom: 0.75em;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        #advent-europeans-box p {
-            color: #34495e;
-            font-weight: bold;
-        }
-
-        #advent-europeans-box ul {
-            color: #34495e;
-        }
-
-        #advent-europeans-box li{
-             font-weight: bold;
-        }
-
-        /* Mobile-specific styles */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                left: -100%;
-                top: 0;
-                height: auto;
-                overflow-y: auto;
-                transition: left 0.3s ease-in-out;
-                position: fixed;
-                z-index: 1000;
-                background-color: #222;
-            }
-            .sidebar.open {
-                left: 0;
-            }
-            .main-content {
-                margin-left: 0;
-                transition: margin-left 0.3s ease-in-out;
-            }
-            .main-content.sidebar-open {
-                margin-left: 0;
-            }
-            .navbar {
-                padding: 10px 20px;
-            }
-            .logo img {
-                height: 80px;
-            }
-            .navbar h1 {
-                font-size: 2em;
-            }
-            #searchInput {
-                width: 100%;
-                margin-top: 10px;
-            }
-            .categories {
-                padding: 20px;
-                flex-direction: column;
-            }
-            .category {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-            .categories-heading{
-                font-size: 1.5em;
-            }
-            .back-button-container{
-                padding: 10px 20px;
-            }
-        }
-
-        /* Specific adjustments for "Advent of the Europeans in India" section */
-        #advent-europeans-box {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            margin-bottom: 20px;
-        }
-
-        #advent-europeans-box > * {
-            margin-bottom: 1em;
-        }
-
-        #advent-europeans-box h2 {
-            font-size: 1.5em;
-            margin-bottom: 0.75em;
-            font-weight: bold;
-            color: #2c3e50;
-            width: 100%;
-        }
-
-        #advent-europeans-box p {
-            color: #34495e;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        #advent-europeans-box ul {
-            list-style-type: disc;
-            padding-left: 20px;
-            color: #34495e;
-            width: 100%;
-        }
-
-        #advent-europeans-box li {
-            margin-bottom: 0.5em;
-            font-weight: bold;
-        }
-
-        /* Next Button Styles */
-        .next-button-container {
+            padding: 10px 40px;
+            background: white;
             display: flex;
             justify-content: space-between; /* Changed to space-between */
-            align-items: center;
-            padding: 20px 0;
+            align-items: center; /* Vertically align items */
         }
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            margin-right: auto; /* Push back button to the left */
+        }
+
         .next-button {
             background: none;
             border: none;
@@ -427,30 +285,63 @@
             text-decoration: none;
             color: black;
             font-weight: bold;
+            margin-left: auto; /* Push next button to the right */
         }
 
-        /* Media query for screens larger than 768px (desktops, etc.) */
-        @media (min-width: 769px) {
-            #advent-europeans-box {
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .categories {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            .category {
-                width: 48%;
-                margin-right: 2%;
-            }
-            .category:nth-child(odd) {
-                clear: left;
-            }
+
+        #advent-europeans-box {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
         }
 
+        #advent-europeans-box p {
+            margin-bottom: 1.2em;
+            text-align: left;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+
+        #advent-europeans-box ul {
+            list-style-type: disc;
+            padding-left: 2em;
+            margin-bottom: 1em;
+            text-align: left;
+        }
+
+        #advent-europeans-box li {
+            margin-bottom: 0.8em;
+            text-align: left;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+
+        #advent-europeans-box h3 {
+            font-size: 1.8em;
+            margin-bottom: 0.8em;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        #advent-europeans-box p strong {
+            font-size: 1.3em;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -486,91 +377,72 @@
         </nav>
 
         <div class="back-button-container">
-            <a href="advent_of_europeans.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
-            <a href="first_carnatic_war.html" class="next-button" style="float:right;">Next <i class="fas fa-arrow-right"></i></a>
+            <a href="modern_india.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+            <a href="#" class="next-button">Next <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="categories-container">
-            <h2 class="categories-heading">Introduction: Advent of the Europeans in India</h2>
             <section id="advent-europeans-box" class="categories">
+                <h3 style="font-size: 1.8em;">Introduction: Advent of the Europeans in India</h3>
+                <div class="image-container">
+                    [Image of Europeans arriving in India]
+                </div>
                 <p>
-                    During the medieval period, India was a jewel of the East,
-                    admired for its economic and cultural wealth. For centuries, it had been a major exporter
-                    of:
+                    During the medieval period, <strong>India</strong> was a <strong>jewel of the East</strong>, admired for its economic and cultural wealth. For centuries, it had been <strong>a major exporter</strong> of:
                 </p>
                 <ul>
                     <li>
-                        Spices – Especially black pepper, cardamom, cinnamon,
-                        nutmeg, and cloves. These were essential in Europe for preserving
-                        food, adding flavor, and even in medicines.
+                        <strong>Spices</strong> – Especially black pepper, cardamom, cinnamon, nutmeg, and cloves. These were essential in Europe for <strong>preserving food</strong>, adding flavor, and even in medicines.
                     </li>
                     <li>
-                        Fine textiles – Indian cotton, silk, and muslin
-                        were prized worldwide for their quality and craftsmanship.
+                        <strong>Fine textiles</strong> – Indian <strong>cotton, silk, and muslin</strong> were prized worldwide for their quality and craftsmanship.
                     </li>
                     <li>
-                        Precious stones and metals – Diamonds, rubies, gold, and silver
-                        from India were known across continents.
+                         <strong>Precious stones and metals</strong> – Diamonds, rubies, gold, and silver from India were known across continents.
                     </li>
                     <li>
-                        Luxury goods and handicrafts – Items like perfumes, dyes, and
-                        intricately carved artifacts.
+                        <strong>Luxury goods and handicrafts</strong> – Items like perfumes, dyes, and intricately carved artifacts.
                     </li>
                 </ul>
                 <p>
-                    This
-                    made India a magnet
-                    for international trade. European demand for these goods
-                    increased dramatically after the Crusades, when contact with the
-                    East reawakened interest in its riches.
+                    This made India a <strong>magnet for international trade</strong>. European demand for these goods increased dramatically after the <strong>Crusades</strong>, when contact with the East reawakened interest in its riches.
                 </p>
                 <p>
-                    Trade
-                    between Europe and India (and the broader East) happened through long,
-                    overland routes:
+                    <strong style="font-size: 1.3em;">Major Routes:</strong>
                 </p>
-                <h2>Major Routes:</h2>
+                <p>
+                    Trade between Europe and India (and the broader East) happened through <strong>long, overland routes</strong>:
+                </p>
+
                 <ul>
                     <li>
-                        The Silk Road: A
-                        vast network of land and sea trade routes connecting China, India, Central
-                        Asia, Persia, Arabia, and Europe.
+                        <strong>The Silk Road</strong>: A vast network of land and sea trade routes connecting China, India, Central Asia, Persia, Arabia, and Europe.
                     </li>
                     <li>
-                        The Spice Route: A
-                        maritime trade path stretching from Southeast Asia through the Indian
-                        Ocean to the Middle East and then to Europe.
+                        <strong>The Spice Route</strong>: A maritime trade path stretching from Southeast Asia through the Indian Ocean to the Middle East and then to Europe.
                     </li>
                     <li>
-                        Arab and Persian
-                        merchants dominated the Eastern leg of the trade.
+                        <strong>Arab and Persian merchants</strong> dominated the Eastern leg of the trade.
                     </li>
                     <li>
-                        Italian city-states,
-                        especially Venice and Genoa, were the final link—importing goods
-                        from Arab traders and selling them across Europe.
+                        <strong>Italian city-states</strong>, especially <strong>Venice and Genoa</strong>, were the final link—importing goods from Arab traders and selling them across Europe.
                     </li>
                 </ul>
-                <h2>The Problem:</h2>
                 <p>
-                    Goods
-                    passed through multiple layers of traders—each one adding taxes and markups.
+                    <strong style="font-size: 1.3em;">The Problem:</strong>
+                </p>
+                <p>
+                    Goods passed through multiple layers of traders—each one adding taxes and markups.
                 </p>
                 <ul>
                     <li>
-                        By the time Indian
-                        spices or Chinese silk reached Europe, prices were astronomically high.
+                        By the time Indian spices or Chinese silk reached Europe, prices were <strong>astronomically high</strong>.
                     </li>
                     <li>
-                        This also made Europeans
-                        dependent on foreign powers to access these goods.
+                        This also made <strong>Europeans dependent</strong> on foreign powers to access these goods.
                     </li>
                 </ul>
             </section>
-            <div class="next-button-container">
-                <a href="advent_of_europeans" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
-                <a href="first_carnatic_war.html" class="next-button" style="float:right;">Next <i class="fas fa-arrow-right"></i></a>
-            </div>
         </div>
 
         <div class="social-media">
