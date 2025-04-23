@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CurioArchive - Advent of the Europeans in India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.4s, color 0.4s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .dark-mode .navbar button {
+            background: #444;
+            color: white;
+        }
+
+        .dark-mode #searchInput {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .content-section {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .dark-mode footer {
+            background: #111;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 2;
+            transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar button#toggleMode {
+        font-size: 2.5em;
+        padding: 16px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 120px;
+            margin: 0 30px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+        .navbar button:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        #searchInput {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
+        }
+
+        .content-section {
+            background-color: white;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.8em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="indian_polity.html">Indian Polity</a></li>
+            <li><a href="#geography">Geography</a></li>
+            <li><a href="#astronomy">Astronomy</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#currentAffairs">Current Affairs</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#learningTamil">Learning Tamil</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="arivan_chat_bot.html">Arivan</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button>
+                <img src="curioarchivelogo.png" alt="CurioArchive Logo"/>
+                <h1>CurioArchive</h1>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search..."/>
+            <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
+        </nav>
+
+       <section class="content-section">
+    <div class="image-container">
+        <img src="images/The_Fall_of_Constantinople.jfif" alt="Illustration depicting European traders arriving in India">
+    </div>
+
+    <h2>The Fall of Constantinople (1453): A Geopolitical Shock</h2>
+    <p>
+        The fall of Constantinople to the Ottoman Turks was a major turning point. As the capital of the Byzantine Empire and the key gateway between Europe and Asia, its capture had huge consequences:
+    </p>
+    <ul>
+        <li>The Ottomans now controlled the Eastern Mediterranean and key parts of the Silk Route.</li>
+        <li>They restricted or heavily taxed European trade with Asia.</li>
+        <li>Land routes to India became dangerous, unpredictable, and too expensive.</li>
+    </ul>
+    <p>
+        This led to a pressing need for alternative trade routes—especially sea routes that could bypass the Ottoman Empire entirely.
+    </p>
+
+    <h2>The Age of Exploration: Why Europe Looked to the Seas</h2>
+    <p>
+        Faced with blocked land routes and rising costs, European powers began exploring maritime alternatives. Their reasons were not only economic but also political, religious, and scientific:
+    </p>
+
+    <h3>1. Economic Motive – The "Spice Race"</h3>
+    <ul>
+        <li>Spices were worth more than gold in Europe.</li>
+        <li>A nation that found a direct route to India could become immensely wealthy.</li>
+        <li>Trading companies and monarchies began sponsoring explorers to find these routes.</li>
+    </ul>
+
+    <h3>2. Political Motive – Rise of Powerful Nation-States</h3>
+    <ul>
+        <li>Strong monarchs in Portugal, Spain, England, and France wanted to:</li>
+        <ul>
+            <li>Expand their empires</li>
+            <li>Outcompete rival nations</li>
+            <li>Secure strategic ports and trading posts</li>
+        </ul>
+    </ul>
+
+    <h3>3. Religious Motive – Spread of Christianity</h3>
+    <ul>
+        <li>There was also a missionary zeal to convert people to Christianity.</li>
+        <li>The Catholic Church supported many voyages.</li>
+        <li>This was often paired with a desire to weaken Islamic influence globally.</li>
+    </ul>
+
+    <h3>4. Scientific and Navigational Advancements</h3>
+    <ul>
+        <li>Europe had made significant progress in:</li>
+        <ul>
+            <li><strong>Shipbuilding:</strong> Ships like the caravel could handle long ocean voyages.</li>
+            <li><strong>Navigation:</strong> Inventions like the magnetic compass, astrolabe, and better maps made it easier to sail safely.</li>
+            <li><strong>Printing Press:</strong> Spread geographical knowledge quickly across Europe.</li>
+        </ul>
+    </ul>
+
+    <p>
+        At this time Spain and Portugal are the super powers of Europe.
+    </p>
+</section>
+
+
+        <div class="button-container">
+            <button onclick="history.back()" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='next_page.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".main-content").classList.toggle("sidebar-open");
+        });
+
+        const toggleButton = document.getElementById("toggleMode");
+        const modeIcon = document.getElementById("modeIcon");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        });
+    </script>
+</body>
+</html>
