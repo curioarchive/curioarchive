@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>CurioArchive</title>
+    <title>CurioArchive - Advent of the Europeans in India</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <style>
@@ -24,30 +24,36 @@
         }
 
         .sidebar {
-            width: 200px;
+            width: 250px;
             height: 100vh;
             background: #222;
             color: white;
-            padding: 20px;
+            padding: 30px;
             position: fixed;
             top: 0;
-            left: -200px;
+            left: -250px;
             transition: left 0.4s ease-in-out;
+            overflow-y: auto;
         }
         .sidebar.open {
             left: 0;
         }
         .sidebar h2 {
-            font-size: 1.9em;
+            font-size: 2.2em;
             text-align: center;
+            margin-bottom: 30px;
         }
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
         .sidebar ul li {
-            padding: 10px;
+            padding: 15px;
             transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
         }
         .sidebar ul li:hover {
             background: #444;
@@ -56,47 +62,51 @@
             color: white;
             text-decoration: none;
             display: block;
+            font-size: 1.1em;
         }
 
         .main-content {
             margin-left: 0;
             flex: 2;
             transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
         }
         .main-content.sidebar-open {
-            margin-left: 200px;
+            margin-left: 250px;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
+            padding: 25px 40px;
             background: white;
             color: black;
             transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .logo {
             display: flex;
             align-items: center;
         }
         .logo img {
-            height: 100px;
-            margin: 0 20px;
+            height: 120px;
+            margin: 0 30px;
         }
         .navbar h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 2.5em;
+            font-size: 3em;
             margin: 0;
         }
         .navbar button {
             background: white;
             color: black;
-            padding: 8px 16px;
+            padding: 12px 24px;
             border: none;
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 30px;
             transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
         }
         .navbar button:hover {
             background: #ddd;
@@ -104,248 +114,92 @@
         }
 
         #searchInput {
-            padding: 12px 20px;
-            font-size: 1.1em;
-            border-radius: 20px;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
             border: 1px solid #ccc;
-            width: 300px;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
         }
 
-        .hero {
-            text-align: center;
-            padding: 60px;
-            background: linear-gradient(135deg, #6200ea, #0d47a1);
-            color: white;
-            animation: fadeIn 1.2s ease-out;
-            display: none;
-        }
-        .hero h2 {
-            font-size: 2.5em;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .categories-container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .categories-heading {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .categories {
+        .content-section {
+            background-color: white;
+            max-width: 900px;
+            margin: 40px auto;
             padding: 40px;
-            text-align: left;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
         }
-
-
-        .category {
-            color: #333;
-            padding: 10px 0;
-            font-size: 1.6em;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            list-style-position: inside;
-            width: 48%;
-            margin-right: 2%;
+        h2, h3, h4 {
+            color: #2c3e50;
         }
-
-        .category:last-child{
-            border-bottom: none;
+        ul {
+            padding-left: 20px;
         }
-
-        .category:nth-child(odd) {
-            clear: left;
+        ul li {
+            margin-bottom: 10px;
         }
-
-        .category:hover {
-            background-color: #f0f0f0;
-        }
-
-        .categories a:nth-child(1)::before {
-            content: "1. ";
-        }
-        .categories a:nth-child(2)::before {
-            content: "2. ";
-        }
-        .categories a:nth-child(3)::before {
-            content: "3. ";
-        }
-        .categories a:nth-child(4)::before {
-            content: "4. ";
-        }
-        .categories a:nth-child(5)::before {
-            content: "5. ";
-        }
-        .categories a:nth-child(6)::before {
-            content: "6. ";
-        }
-        .categories a:nth-child(7)::before {
-            content: "7. ";
-        }
-        .categories a:nth-child(8)::before {
-            content: "8. ";
-        }
-        .categories a:nth-child(9)::before {
-            content: "9. ";
-        }
-        .categories a:nth-child(10)::before {
-            content: "10. ";
-        }
-
-
-        .social-media {
-            text-align: center;
-            padding: 20px;
-            background: #333;
-            color: white;
-        }
-        .social-media a {
-            margin: 0 10px;
-            text-decoration: none;
-            font-size: 1.5em;
-            transition: transform 0.3s;
-        }
-        .social-media a:hover {
-            transform: scale(1.2);
-        }
-
-        .social-media a:nth-child(2) { color: red; }
-        .social-media a:nth-child(3) { color: #1877f2; }
-        .social-media a:nth-child(4) { color: #e1306c; }
-        .social-media a:nth-child(5) { color: #1da1f2; }
 
         footer {
             text-align: center;
-            padding: 10px;
+            padding: 25px;
             background: #222;
             color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f4f4f4;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 6px;
-            border: 2px solid transparent;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        #modeIcon{
-            font-size: 3em;
-        }
-        .back-button-container {
-            padding: 10px 40px;
-            background: white;
+        .button-container {
+            margin-top: 20px;
             display: flex;
-            justify-content: space-between; /* Changed to space-between */
-            align-items: center; /* Vertically align items */
+            justify-content: space-between;
         }
-        .back-button {
-            background: none;
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
             border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            margin-right: auto; /* Push back button to the left */
-        }
-
-        .next-button {
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            margin-left: auto; /* Push next button to the right */
-        }
-
-
-        #advent-europeans-box {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #advent-europeans-box p {
-            margin-bottom: 1.2em;
-            text-align: left;
+            border-radius: 30px;
             font-size: 1.2em;
-            line-height: 1.7;
-        }
-
-        #advent-europeans-box ul {
-            list-style-type: disc;
-            padding-left: 2em;
-            margin-bottom: 1em;
-            text-align: left;
-        }
-
-        #advent-europeans-box li {
-            margin-bottom: 0.8em;
-            text-align: left;
-            font-size: 1.2em;
-            line-height: 1.7;
-        }
-
-        #advent-europeans-box h3 {
-            font-size: 1.8em;
-            margin-bottom: 0.8em;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        #advent-europeans-box p strong {
-            font-size: 1.3em;
-        }
-
-        .image-container {
-            width: 100%;
-            height: 400px;
-            display: flex;
-            justify-content: center;
+            cursor: pointer;
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.4em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        /* Image styles */
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
             border-radius: 8px;
-            padding: 10px;
         }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <h2>Categories</h2>
         <ul>
@@ -360,7 +214,6 @@
             <li><a href="#learningTamil">Learning Tamil</a></li>
             <li><a href="#sports">Sports</a></li>
             <li><a href="arivan_chat_bot.html">Arivan</a></li>
-            <li><a href="about_us.html">About Us</a></li>
             <li><a href="contact.html">Contact Us</a></li>
         </ul>
     </div>
@@ -376,81 +229,59 @@
             <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
         </nav>
 
-        <div class="back-button-container">
-            <a href="modern_india.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
-            <a href="#" class="next-button">Next <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="content-section">
+            <!-- Image placed above the Introduction -->
+            <div class="image-container">
+                <img src="your-image-path.jpg" alt="Image Description">
+            </div>
 
-        <div class="categories-container">
-            <section id="advent-europeans-box" class="categories">
-                <h3 style="font-size: 1.8em;">Introduction: Advent of the Europeans in India</h3>
-                <div class="image-container">
-                    [Image of Europeans arriving in India]
-                </div>
-                <p>
-                    During the medieval period, <strong>India</strong> was a <strong>jewel of the East</strong>, admired for its economic and cultural wealth. For centuries, it had been <strong>a major exporter</strong> of:
-                </p>
-                <ul>
-                    <li>
-                        <strong>Spices</strong> – Especially black pepper, cardamom, cinnamon, nutmeg, and cloves. These were essential in Europe for <strong>preserving food</strong>, adding flavor, and even in medicines.
-                    </li>
-                    <li>
-                        <strong>Fine textiles</strong> – Indian <strong>cotton, silk, and muslin</strong> were prized worldwide for their quality and craftsmanship.
-                    </li>
-                    <li>
-                         <strong>Precious stones and metals</strong> – Diamonds, rubies, gold, and silver from India were known across continents.
-                    </li>
-                    <li>
-                        <strong>Luxury goods and handicrafts</strong> – Items like perfumes, dyes, and intricately carved artifacts.
-                    </li>
-                </ul>
-                <p>
-                    This made India a <strong>magnet for international trade</strong>. European demand for these goods increased dramatically after the <strong>Crusades</strong>, when contact with the East reawakened interest in its riches.
-                </p>
-                <p>
-                    <strong style="font-size: 1.3em;">Major Routes:</strong>
-                </p>
-                <p>
-                    Trade between Europe and India (and the broader East) happened through <strong>long, overland routes</strong>:
-                </p>
+            <h2>Introduction: Advent of the Europeans in India</h2>
+            <p>
+                During the medieval period, India was regarded as a jewel of the East, renowned for its vast economic prosperity and rich cultural heritage.
+                For centuries, India was a major hub of international trade, exporting a wide range of valuable goods:
+            </p>
 
-                <ul>
-                    <li>
-                        <strong>The Silk Road</strong>: A vast network of land and sea trade routes connecting China, India, Central Asia, Persia, Arabia, and Europe.
-                    </li>
-                    <li>
-                        <strong>The Spice Route</strong>: A maritime trade path stretching from Southeast Asia through the Indian Ocean to the Middle East and then to Europe.
-                    </li>
-                    <li>
-                        <strong>Arab and Persian merchants</strong> dominated the Eastern leg of the trade.
-                    </li>
-                    <li>
-                        <strong>Italian city-states</strong>, especially <strong>Venice and Genoa</strong>, were the final link—importing goods from Arab traders and selling them across Europe.
-                    </li>
-                </ul>
-                <p>
-                    <strong style="font-size: 1.3em;">The Problem:</strong>
-                </p>
-                <p>
-                    Goods passed through multiple layers of traders—each one adding taxes and markups.
-                </p>
-                <ul>
-                    <li>
-                        By the time Indian spices or Chinese silk reached Europe, prices were <strong>astronomically high</strong>.
-                    </li>
-                    <li>
-                        This also made <strong>Europeans dependent</strong> on foreign powers to access these goods.
-                    </li>
-                </ul>
-            </section>
-        </div>
+            <h3>Major Exports from India</h3>
+            <ul>
+                <li><strong>Spices</strong> – Black pepper, cardamom, cinnamon, nutmeg, and cloves were in high demand across Europe, used for preserving food, enhancing flavor, and medicinal purposes.</li>
+                <li><strong>Fine Textiles</strong> – Indian cotton, silk, and muslin were highly sought after for their exceptional quality and craftsmanship.</li>
+                <li><strong>Precious Stones and Metals</strong> – Diamonds, rubies, gold, and silver from Indian mines reached markets across continents.</li>
+                <li><strong>Luxury Goods and Handicrafts</strong> – Products such as perfumes, dyes, and intricately carved artifacts were prized globally.</li>
+            </ul>
 
-        <div class="social-media">
-            <p>Follow Us On:</p>
-            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <p>
+                This wealth made India a center of attraction for international trade. The demand for Indian goods surged in Europe following the Crusades,
+                which revived European interest in the riches of the East.
+            </p>
+
+            <h3>Traditional Trade Routes</h3>
+            <p>
+                Before direct sea routes were established, trade between Europe and the East was conducted through complex overland and maritime routes:
+            </p>
+
+            <h4>Key Trade Routes</h4>
+            <ul>
+                <li><strong>The Silk Road</strong>: A vast network connecting China, India, Central Asia, Persia, Arabia, and Europe via land and sea.</li>
+                <li><strong>The Spice Route</strong>: A maritime route stretching from Southeast Asia across the Indian Ocean to the Middle East and into Europe.</li>
+            </ul>
+
+            <p>These routes were controlled by:</p>
+            <ul>
+                <li><strong>Arab and Persian merchants</strong>, who dominated trade across the Indian Ocean and the Middle East.</li>
+                <li><strong>Italian city-states</strong> like Venice and Genoa, which served as final distributors in Europe, importing goods from Arab traders and supplying them to the rest of the continent.</li>
+            </ul>
+
+            <h3>The Problem for Europe</h3>
+            <ul>
+                <li><strong>Multiple intermediaries</strong>: Goods changed hands many times, with each trader adding taxes and profit margins.</li>
+                <li><strong>Skyrocketing costs</strong>: By the time spices or silks reached European markets, they were extremely expensive.</li>
+                <li><strong>Dependence on foreign traders</strong>: Europeans were at the mercy of Arab and Italian merchants to access Eastern goods.</li>
+            </ul>
+        </section>
+
+        <div class="button-container">
+            <button onclick="history.back()" class="back-button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button onclick="window.location.href='next_page.html'" class="next-button"><i class="fas fa-arrow-right"></i> Next</button>
         </div>
 
         <footer>
@@ -478,7 +309,7 @@
         });
 
         document.getElementById("searchInput").addEventListener("input", function () {
-            // search input functionality
+            let filter = this.value.toLowerCase();
         });
     </script>
 </body>
