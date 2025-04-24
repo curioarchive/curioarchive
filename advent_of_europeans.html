@@ -146,70 +146,37 @@
 
         .categories {
             padding: 40px;
-            text-align: left;
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
         }
 
-
         .category {
+            width: 100%;
             color: #333;
-            padding: 10px 0;
+            padding: 10px;
             font-size: 1.2em;
             border-bottom: 1px solid #ddd;
             cursor: pointer;
             transition: background 0.3s;
             text-decoration: none;
-            list-style-position: inside;
-            width: 48%;
-            margin-right: 2%;
-        }
-
-        .category:last-child{
-           border-bottom: none;
-        }
-
-        .category:nth-child(odd) {
-            clear: left;
         }
 
         .category:hover {
             background-color: #f0f0f0;
         }
 
-        .categories a:nth-child(1)::before {
-            content: "1. ";
-        }
-        .categories a:nth-child(2)::before {
-            content: "2. ";
-        }
-        .categories a:nth-child(3)::before {
-            content: "3. ";
-        }
-        .categories a:nth-child(4)::before {
-            content: "4. ";
-        }
-        .categories a:nth-child(5)::before {
-            content: "5. ";
-        }
-        .categories a:nth-child(6)::before {
-            content: "6. ";
-        }
-        .categories a:nth-child(7)::before {
-            content: "7. ";
-        }
-        .categories a:nth-child(8)::before {
-            content: "8. ";
-        }
-        .categories a:nth-child(9)::before {
-            content: "9. ";
-        }
-        .categories a:nth-child(10)::before {
-            content: "10. ";
-        }
-
+        .categories a:nth-child(1)::before { content: "1. "; }
+        .categories a:nth-child(2)::before { content: "2. "; }
+        .categories a:nth-child(3)::before { content: "3. "; }
+        .categories a:nth-child(4)::before { content: "4. "; }
+        .categories a:nth-child(5)::before { content: "5. "; }
+        .categories a:nth-child(6)::before { content: "6. "; }
+        .categories a:nth-child(7)::before { content: "7. "; }
+        .categories a:nth-child(8)::before { content: "8. "; }
+        .categories a:nth-child(9)::before { content: "9. "; }
+        .categories a:nth-child(10)::before { content: "10. "; }
 
         .social-media {
             text-align: center;
@@ -256,23 +223,26 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-        #modeIcon{
+
+        #modeIcon {
             font-size: 3em;
         }
+
         .back-button-container {
-          padding: 10px 40px;
-          background: white;
-          display: flex;
-          justify-content: flex-start;
+            padding: 10px 40px;
+            background: white;
+            display: flex;
+            justify-content: flex-start;
         }
+
         .back-button {
-          background: none;
-          border: none;
-          font-size: 1.5em;
-          cursor: pointer;
-          text-decoration: none;
-          color: black;
-          font-weight: bold;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
         }
 
         #advent-europeans-box {
@@ -325,15 +295,14 @@
             <section id="advent-europeans-box" class="categories">
                 <a href="Introduction_Advent_of_the_Europeans_in_India.html" class="category">Introduction: Advent of the Europeans in India</a>
                 <a href="The_Fall_of_Constantinople.html" class="category">The Fall of Constantinople (1453): A Geopolitical Shock</a>
-                <a href="#french_east_india_company" class="category">Portugal – Pioneers of the Sea Route to India</a>
-                <a href="#danish_east_india_company" class="category">Spain – Masters of the Westward Route</a>
-                <a href="#portuguese_east_india_company" class="category">Treaty of Tordesillas (1494)</a>
-                <a href="#anglo_french_rivalry" class="category">Bartholomew Dias – The Man Who Opened the Gateway to India (1488)</a>
-                <a href="#carnatic_wars" class="category">Vasco da Gama – The First European to Reach India by Sea</a>
-                <a href="#battle_of_plassey" class="category">Pedro Álvares Cabral – The Forgotten Pioneer (1500)</a>
-                <a href="#battle_of_buxar" class="category">Vasco da Gama's Second Voyage to India (1502–1503)</a>
-                <a href="#subsidiary_alliance" class="category">Francisco de Almeida – The First Viceroy of Portuguese India (1505–1509)</a>
-
+                <a href="Portugal–Pioneers_of_the Sea_Route_to_India.html" class="category">Portugal – Pioneers of the Sea Route to India</a>
+                <a href="#" class="category">Spain – Masters of the Westward Route</a>
+                <a href="#" class="category">Treaty of Tordesillas (1494)</a>
+                <a href="#" class="category">Bartholomew Dias – The Man Who Opened the Gateway to India (1488)</a>
+                <a href="#" class="category">Vasco da Gama – The First European to Reach India by Sea</a>
+                <a href="#" class="category">Pedro Álvares Cabral – The Forgotten Pioneer (1500)</a>
+                <a href="#" class="category">Vasco da Gama's Second Voyage to India (1502–1503)</a>
+                <a href="#" class="category">Francisco de Almeida – The First Viceroy of Portuguese India (1505–1509)</a>
             </section>
         </div>
 
