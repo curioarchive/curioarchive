@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CurioArchive - history of human evolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.4s, color 0.4s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .dark-mode .navbar button {
+            background: #444;
+            color: white;
+        }
+
+        .dark-mode #searchInput {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .content-section {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .dark-mode footer {
+            background: #111;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 2;
+            transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar button#toggleMode {
+            font-size: 2.5em;
+            padding: 16px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 120px;
+            margin: 0 30px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+        .navbar button:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        #searchInput {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
+        }
+
+        .content-section {
+            background-color: white;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.8em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="indian_polity.html">Indian Polity</a></li>
+            <li><a href="#geography">Geography</a></li>
+            <li><a href="#astronomy">Astronomy</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#currentAffairs">Current Affairs</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#learningTamil">Learning Tamil</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="arivan_chat_bot.html">Arivan</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button>
+                <img src="curioarchivelogo.png" alt="CurioArchive Logo"/>
+                <h1>CurioArchive</h1>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search..."/>
+            <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
+        </nav>
+
+        <div class="button-container">
+            <button onclick="window.location.href='world_history.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href=''" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+  <section class="content-section">
+    <div class="image-container">
+        <img src="images/history_of_human_evolution1.png" alt="">
+    </div>
+      <title>History of Human Evolution</title>
+
+        <header>
+            <h1>History of Human Evolution</h1>
+        </header>
+
+        <section>
+            <p>The history of human evolution can be divided into distinct geological periods based on the development of early human ancestors. These periods include the <strong>Miocene</strong>, <strong>Pliocene</strong>, <strong>Pleistocene</strong>, and the <strong>Holocene</strong>, each marked by significant developments in brain size, tool use, and social behavior.</p>
+        </section>
+
+        <section>
+            <h2>Miocene (23 - 5 million years ago)</h2>
+            <p>The Miocene was a time of climatic change that led to the spread of forests and open savannahs, which created new challenges for early primates. <strong>Homo ancestors</strong> likely first appeared in Africa during this period. Early human-like species had an <strong>inclined backbone</strong>, signifying a shift from ape-like to more human-like characteristics.</p>
+        </section>
+
+        <section>
+            <h2>Pliocene (5.4 - 2.5 million years ago)</h2>
+            <p>The Pliocene saw the development of <strong>Australopithecus</strong>, one of the earliest hominids, which walked upright and exhibited early forms of human social structure. This period was marked by significant environmental change, with many species adapting to more open, grassland habitats.</p>
+        </section>
+
+        <section>
+            <h2>Pleistocene (2.5 million - 11,000 years ago)</h2>
+            <p>This epoch is characterized by dramatic climatic changes and the onset of the <strong>Ice Age</strong>. During this period, human ancestors evolved significantly, using tools, controlling fire, and developing more complex social behaviors. Homo sapiens began migrating out of Africa, spreading across Eurasia and beyond.</p>
+        </section>
+
+        <section>
+            <h2>Holocene (11,000 years ago to present)</h2>
+            <p>The Holocene is the current geological epoch, characterized by the development of agriculture, the rise of civilizations, and the emergence of modern human societies. Homo sapiens are the only surviving human species today, and we continue to evolve culturally and technologically.</p>
+        </section>
+
+        <hr>
+
+        <header>
+            <h1>Stages of Human Evolution: A Detailed Breakdown</h1>
+        </header>
+
+        <section>
+            <h3>1. Dryopithecus (12.5 to 11.1 million years ago, Miocene Period)</h3>
+            <div class="image-container">
+        <img src="images/history_of_human_evolution2.png" alt="">
+    </div>
+            <p><strong>Dryopithecus</strong> is considered one of the earliest ancestors of the human lineage. It lived during the <strong>Miocene period</strong>, a time when climate conditions and vegetation types were changing, creating new evolutionary pressures. It was primarily found in <strong>Europe</strong> and <strong>Africa</strong>.</p>
+            <p>This species had a mixture of traits that are similar to modern apes, like chimpanzees and gorillas, but also showed features that would later be seen in humans. Dryopithecus was adapted to living in trees, and it had a relatively small brain size compared to later human ancestors.</p>
+            <p><strong>Significance in Evolution</strong>: Dryopithecus is often considered a common ancestor to both humans and other great apes, such as chimpanzees and gorillas. The evolutionary divergence from this species led to the development of both human and ape lineages.</p>
+        </section>
+
+        <section>
+            <h3>2. Ramapithecus (14 to 9 million years ago, Miocene Period)</h3>
+            <div class="image-container">
+        <img src="images/history_of_human_evolution3.png" alt="">
+    </div>
+            <p><strong>Ramapithecus</strong> was discovered in the <strong>Siwalik Hills</strong> of India and is often cited as one of the earliest hominoids in the evolutionary chain. It lived between <strong>14 and 9 million years ago</strong>. Fossil evidence indicates that Ramapithecus had both ape-like and human-like features, though it was more closely related to orangutans than to modern humans.</p>
+            <p>Ramapithecus had a <strong>small brain size</strong>, and like Dryopithecus, it is believed to have been arboreal (tree-dwelling). However, its dental and jaw structures suggest that it might have been one of the first species to show adaptation to a <strong>more terrestrial lifestyle</strong>.</p>
+            <p><strong>Significance in Evolution</strong>: The genus Ramapithecus represents a transitional species that highlights the evolving distinction between the lineages of humans and other apes. While its connection to humans is still debated, it is often considered a stepping stone in the evolutionary history of the great apes and humans.</p>
+        </section>
+
+        <section>
+            <h3>3. Australopithecus (4 to 2 million years ago, Pliocene and Pleistocene Periods)</h3>
+            <div class="image-container">
+        <img src="images/history_of_human_evolution5.jpg" alt="">
+    </div>
+            <p>The genus <strong>Australopithecus</strong> is crucial in understanding the development of <strong>bipedalism</strong> and early human evolution. This genus appeared around <strong>4 million years ago</strong> and survived until about <strong>2 million years ago</strong>. Australopithecus species are characterized by their <strong>small brain size</strong> and <strong>apelike features</strong> but were the first to show signs of walking upright on two legs.</p>
+            <p><strong>Famous Species</strong>: One of the most well-known members of this genus is <strong>Australopithecus afarensis</strong>, represented by the fossil known as <strong>Lucy</strong>, discovered in <strong>Ethiopia</strong> in 1974. Lucy's remains provided crucial evidence of bipedalism, one of the defining characteristics of the human lineage.</p>
+            <p><strong>Significance in Evolution</strong>: Australopithecus represents a crucial step in the evolution of humans, as it is the first known hominid to exhibit bipedalism. While its brain size remained small compared to later humans, its upright posture was a precursor to the evolution of Homo species.</p>
+        </section>
+
+        <section>
+            <h3>4. Homo Habilis (2.4 to 1.4 million years ago, Early Pleistocene Epoch)</h3>
+            <p><strong>Homo habilis</strong>, meaning "Handy Man," was the first species of the genus Homo. It lived approximately between <strong>2.4 and 1.4 million years ago</strong>. This species earned its name due to its use of <strong>stone tools</strong>, marking a significant milestone in the evolution of early humans.</p>
+            <p><strong>Characteristics</strong>: Homo habilis had a <strong>larger brain</strong> than its Australopithecine ancestors, though it still had a relatively small brain compared to later species. It is believed that Homo habilis was a <strong>scavenger</strong> rather than a predator and relied on tools for various tasks.</p>
+            <p><strong>Significance in Evolution</strong>: Homo habilis is considered one of the first species to use <strong>stone tools</strong>, a behavior that would evolve over time into more sophisticated technology. This species also marks the emergence of the genus Homo, which would eventually give rise to modern humans.</p>
+        </section>
+
+        <section>
+            <h3>5. Homo Erectus (1.9 million to 110,000 years ago, Pleistocene Epoch)</h3>
+            <div class="image-container">
+        <img src="images/history_of_human_evolution4.png" alt="">
+    </div>
+            <p><strong>Homo erectus</strong>, meaning "Upright Man," is one of the most significant species in human evolution. It lived from about <strong>1.9 million years ago</strong> to <strong>110,000 years ago</strong>. Homo erectus had a <strong>larger brain</strong> and <strong>more human-like features</strong> compared to its predecessors.</p>
+            <p><strong>Major Achievements</strong>: Homo erectus was the first species to <strong>migrate out of Africa</strong>, spreading across <strong>Eurasia</strong>. It is also believed to be the first to <strong>control fire</strong> and develop <strong>advanced stone tools</strong>, such as the <strong>Acheulean handaxe</strong>.</p>
+            <p><strong>Significance in Evolution</strong>: Homo erectus represents a major evolutionary step toward modern humans. Its migration out of Africa marked the beginning of global human dispersal, and its ability to use fire and make tools set the stage for the development of more complex societies.</p>
+        </section>
+
+        <section>
+            <h3>6. Homo Neanderthalensis (400,000 to 40,000 years ago, Pleistocene Epoch)</h3>
+            <p><strong>Neanderthals</strong> (Homo neanderthalensis) lived in <strong>Eurasia</strong> between <strong>400,000 and 40,000 years ago</strong>. They are closely related to modern humans, sharing many physical and cultural traits, but they were adapted to survive in cold climates.</p>
+            <p><strong>Physical Features</strong>: Neanderthals were shorter and stockier than modern humans, with robust bodies suited for life in harsh, cold environments. They were skilled toolmakers and hunters, using a variety of stone tools and weapons.</p>
+            <p><strong>Cultural and Social Development</strong>: Evidence suggests that Neanderthals had <strong>symbolic thinking</strong>, as they created art, buried their dead, and may have had some form of language. Genetic studies show that <strong>Homo sapiens</strong> and Neanderthals interbred, leaving traces of Neanderthal DNA in modern human populations, particularly in <strong>non-African</strong> groups.</p>
+            <p><strong>Significance in Evolution</strong>: The Neanderthals represent a parallel branch of human evolution. Their extinction around <strong>40,000 years ago</strong> marked the rise of Homo sapiens as the dominant human species on Earth.</p>
+        </section>
+
+        <section>
+            <h3>7. Homo Sapiens (315,000 years ago to present)</h3>
+            <p><strong>Homo sapiens</strong>, or "wise man," is the species to which all modern humans belong. The earliest fossils of Homo sapiens date back to about <strong>315,000 years ago</strong> and were discovered in <strong>Morocco</strong>. Over time, Homo sapiens evolved and spread across the globe, replacing other hominid species like Neanderthals.</p>
+            <p><strong>Physical and Cognitive Features</strong>: Homo sapiens have a <strong>large brain</strong>, capable of abstract thought, problem-solving, and complex social behavior. They also developed <strong>advanced language</strong>, art, and technology, setting them apart from earlier species.</p>
+            <p><strong>Significance in Evolution</strong>: Homo sapiens are the <strong>only surviving species</strong> of the genus Homo. Over the last <strong>10,000 years</strong>, our species has undergone rapid cultural and technological development, shaping the world we live in today. As we continue to advance, the future of human evolution remains a subject of ongoing research and discovery.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Factors That Impacted Human Evolution</h2>
+            <p>The development of Homo species over time was influenced by several key factors:</p>
+            <ul>
+                <li><strong>Bipedalism</strong>: The ability to walk on two legs freed the hands for tool use and enabled early humans to travel more efficiently.</li>
+                <li><strong>Increased Brain Size</strong>: As brain size increased, humans developed more advanced cognitive abilities, leading to problem-solving, language, and social complexity.</li>
+                <li><strong>Tool Use</strong>: Early humans began using tools, which improved their ability to hunt, gather, and protect themselves.</li>
+                <li><strong>Environmental Changes</strong>: Changing climates and environments led to adaptations in human species, such as the development of larger bodies to survive cold temperatures or smaller bodies for hot climates.</li>
+                <li><strong>Social Structure</strong>: Social behaviors, including cooperation and the development of language, allowed early humans to thrive and share knowledge, which was crucial for survival.</li>
+            </ul>
+        </section>
+
+</section>
+        <div class="button-container">
+            <button onclick="window.location.href='world_history.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".main-content").classList.toggle("sidebar-open");
+        });
+
+        const toggleButton = document.getElementById("toggleMode");
+        const modeIcon = document.getElementById("modeIcon");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        });
+    </script>
+</body>
+</html>
