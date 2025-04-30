@@ -213,7 +213,8 @@
             background-color: #2980b9;
             transform: scale(1.05);
         }
-
+                         
+            
         .back-button:focus, .next-button:focus {
             outline: none;
         }
@@ -262,6 +263,7 @@
 
         <div class="button-container">
             <button onclick="window.location.href='Treaty_of_Tordesillas_(1494).html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button class="translate-button" id="translateButton"><i class="fas fa-globe"></i> Translate to தமிழ்</button>
             <button onclick="window.location.href='Vasco_da_Gama–The_First_European_to_Reach_India_by_Sea.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
         </div>
 
@@ -329,6 +331,82 @@
             } else {
                 modeIcon.classList.remove("fa-sun");
                 modeIcon.classList.add("fa-moon");
+            }
+        });
+ document.getElementById('translateButton').addEventListener('click', () => {
+            const textToTranslate = document.querySelector('.content-section');
+            const translationButton = document.getElementById('translateButton');
+
+            if (translationButton.innerText === "Translate to தமிழ்") {
+                // Perform the translation to Tamil.  For demonstration, I'll just replace with dummy Tamil text.
+                textToTranslate.innerHTML = `
+                    <div class="image-container">
+                        <img src="images/Bartholomew_Dias.jfif" alt="Portugal Explorer">
+                    </div>
+                    <h2>6. பார்த்தலோமவ் டயஸ் - இந்தியாவின் நுழைவாயிலைத் திறந்தவர் (1488)</h2>
+                    <ul>
+                        <li>பார்த்தலோமவ் டயஸ் ஒரு போர்த்துகீசிய மாலுமி மற்றும் ஆய்வாளர்.</li>
+                        <li>அட்லாண்டிக் மற்றும் இந்தியப் பெருங்கடல்கள் இணைந்திருப்பதைக் காட்டிய முதல் ஐரோப்பியர் இவர்தான்.</li>
+                    </ul>
+                    <h3>வரலாற்றுப் பயணம் (1487-1488)</h3>
+                    <ul>
+                        <li>ஆசியாவிற்கு ஒரு கடல் வழியைக் கண்டுபிடிக்க போர்த்துகல் இரண்டாம் ஜான் மன்னரால் டயஸ் அனுப்பப்பட்டார்.</li>
+                        <li>அவர் 1487 இல் 3 கப்பல்களுடன் புறப்பட்டார்.</li>
+                        <li>1488 இல், அவர் ஆப்பிரிக்காவின் தெற்கு முனையில் உள்ள நன்னம்பிக்கை முனையை வெற்றிகரமாக அடைந்தார்.</li>
+                    </ul>
+                    <p>முதலில், அவர் அதை "புயல்களின் முனை" என்று பெயரிட்டார், ஏனெனில் கடுமையான வானிலை. ஆனால் மன்னர் அதை "நன்னம்பிக்கை முனை" என்று மறுபெயரிட்டார், ஏனெனில் இது இந்தியாவுக்கு கடல் வழியாகச் செல்லும் நம்பிக்கையை அளித்தது.</p>
+                    <h3>டையஸ் ஏன் இந்தியாவுக்கு முழுமையாகச் செல்லவில்லை?</h3>
+                    <ul>
+                        <li>டையஸ் தொடர்ந்து செல்ல விரும்பினார், ஆனால் அவரது குழுவினர் சோர்வாகவும், தெரியாததற்கு பயந்தும் கலகம் செய்தனர்.</li>
+                        <li>இந்தியா இன்னும் சில வாரங்களே தொலைவில் இருந்தபோதிலும், அவர் திரும்ப வேண்டிய கட்டாயம் ஏற்பட்டது.</li>
+                    </ul>
+                    <p>இருப்பினும், அவரது பயணம் உலக வரலாற்றில் ஒரு திருப்புமுனையாக அமைந்தது.</p>
+                    <h3>பின்விளைவும் மரபும்:</h3>
+                    <ul>
+                        <li>டையஸ் 1488 இல் ஒரு தேசிய வீரராக போர்த்துகலுக்குத் திரும்பினார்.</li>
+                        <li>பின்னர் வாஸ்கோ டா காமாவின் 1497 பயணத்திற்காக கப்பல்களை வடிவமைக்க உதவினார்.</li>
+                        <li>வருத்தமாக, அவர் 1500 இல், நன்னம்பிக்கை முனையிலிருந்து ஒரு புயலின் போது மற்றொரு பயணத்தில் இறந்தார்.</li>
+                    </ul>
+                `;
+                translationButton.innerText = "Translate to English";
+            } else {
+                // Perform the translation back to English
+                textToTranslate.innerHTML = `
+                    <div class="image-container">
+                        <img src="images/Bartholomew_Dias.jfif" alt="Portugal Explorer">
+                     </div>
+                    <h2>6. Bartholomew Dias – The Man Who Opened the Gateway to India (1488)</h2>
+
+                    <ul>
+                        <li>Bartholomew Dias was a Portuguese navigator and explorer.</li>
+                        <li>He was the first European to sail around the southern tip of Africa, showing that the Atlantic and Indian Oceans were connected.</li>
+                    </ul>
+
+                    <h3>The Historic Voyage (1487–1488)</h3>
+                    <ul>
+                        <li>Dias was sent by King John II of Portugal to find a sea route to Asia.</li>
+                        <li>He set sail in 1487 with 3 ships.</li>
+                        <li>In 1488, he successfully rounded the Cape of Good Hope, at the southern tip of Africa.</li>
+                    </ul>
+
+                    <p>At first, he named it the “Cape of Storms” because of rough weather. But the king renamed it “Cape of Good Hope”, asit gave hope of reaching India by sea.</p>
+
+                    <h3>Why Didn’t Dias Go All the Way to India?</h3>
+                    <ul>
+                        <li>Dias wanted to continue, but his crew mutinied (rebelled) because they were tired and scared of the unknown.</li>
+                        <li>He was forced to turn back, even though India was likely just a few weeks away.</li>
+                    </ul>
+
+                    <p>Even so, his journey was a turning point in world history.</p>
+
+                    <h3>Aftermath and Legacy:</h3>
+                    <ul>
+                        <li>Dias returned to Portugal in 1488, a national hero.</li>
+                        <li>He later helped design ships for Vasco da Gama’s voyage in 1497.</li>
+                        <li>Sadly, he died in 1500, during a storm off the Cape of Good Hope, while on another voyage.</li>
+                    </ul>
+                `;
+                translationButton.innerText = "Translate to தமிழ்";
             }
         });
     </script>
