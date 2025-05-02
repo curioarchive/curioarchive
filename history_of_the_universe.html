@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CurioArchive - Spain – Masters of the Westward Route</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.4s, color 0.4s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .dark-mode .navbar button {
+            background: #444;
+            color: white;
+        }
+
+        .dark-mode #searchInput {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .content-section {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .dark-mode footer {
+            background: #111;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 2;
+            transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar button#toggleMode {
+            font-size: 2.5em;
+            padding: 16px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 120px;
+            margin: 0 30px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+        .navbar button:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        #searchInput {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
+        }
+
+        .content-section {
+            background-color: white;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.8em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="indian_polity.html">Indian Polity</a></li>
+            <li><a href="#geography">Geography</a></li>
+            <li><a href="#astronomy">Astronomy</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#currentAffairs">Current Affairs</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#learningTamil">Learning Tamil</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="arivan_chat_bot.html">Arivan</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button>
+                <img src="curioarchivelogo.png" alt="CurioArchive Logo"/>
+                <h1>CurioArchive</h1>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search..."/>
+            <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
+        </nav>
+
+        <div class="button-container">
+            <button onclick="window.location.href='history_of_science_and_technology.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+  <section class="content-section">
+    <div class="image-container">
+        <img src="images/universe.jfif" alt="Afonso de Albuquerque">
+    </div>
+  <h1>Introduction</h1>
+  <p>The universe, in all its vastness and complexity, has long fascinated humankind. From ancient myths to modern astrophysics, we have always sought to understand how everything around us—space, time, matter, and even life—came to be. The history of the universe and the formation of our solar system represent one of the greatest journeys of scientific discovery.</p>
+  <p>This article explores major theories about the Earth's origin, with a special focus on the Big Bang Theory, which is the most widely accepted explanation for the beginning of the universe. It also provides an overview of galaxies, including our own Milky Way, and outlines how modern science interprets the structure of the cosmos. Through this exploration, we gain insight not only into where we are but also into the remarkable story of how it all began.</p>
+
+  <h2>HISTORY OF THE UNIVERSE</h2>
+
+  <h2>MAJOR THEORIES OF FORMATION OF THE EARTH</h2>
+  <p>Over the centuries, scientists have proposed various theories to explain the origin and formation of the Earth. Here are some of the most prominent ones:</p>
+  <ol>
+    <li><strong>Nebular Theory (Proposed by Immanuel Kant and Pierre-Simon Laplace)</strong><br>
+    This theory suggests that the Sun and the planets formed from a rotating cloud of gas and dust known as a nebula. As the nebula collapsed under its own gravity, it began to spin faster and flatten into a disk. The Sun formed at the center, and the planets formed from the remaining material.</li>
+    
+    <li><strong>Chamberlin–Moulton Planetesimal Hypothesis</strong><br>
+    Proposed by Thomas C. Chamberlin and Forest R. Moulton in the early 20th century, this theory suggests that a passing star pulled matter out of the Sun. The ejected material eventually cooled and condensed into small solid bodies called planetesimals, which later combined to form planets.</li>
+    
+    <li><strong>Russel's Binary Star Hypothesis</strong><br>
+    This hypothesis, proposed by Henry Norris Russell, posits that the Sun was once part of a binary star system. Due to gravitational interactions, material was stripped off one of the stars, leading to the formation of planets. However, this theory lost support due to lack of observational evidence.</li>
+    
+    <li><strong>The Big Bang Theory</strong><br>
+    This is the most widely accepted explanation for the origin of the universe, and indirectly, for the formation of Earth as part of the cosmic process.</li>
+  </ol>
+
+  <h2>THE BIG BANG THEORY</h2>
+  <p>The Big Bang Theory explains how the universe began and evolved over time. According to this theory, the universe started approximately 13.8 billion years ago from a point of infinite density and temperature—a singularity.</p>
+  <p>This singularity began expanding rapidly in all directions, giving birth to space, time, matter, and energy. Contrary to the common misconception, the Big Bang was not an explosion in space—it was an expansion of space itself. The universe was initially smaller than a subatomic particle and has been expanding ever since, like the surface of an inflating balloon.</p>
+  <p>Physicists believe that even time itself began at the moment of the Big Bang. The concept that space and time are intertwined was reinforced by Albert Einstein's General Theory of Relativity, formulated in 1915, which described gravity as the curvature of space-time.</p>
+  <p>In 1917, astronomer Willem de Sitter applied Einstein’s theory and proposed an expanding universe. Later, Aleksandr Friedmann (1922) and Georges Lemaître (1927), a Belgian physicist, astronomer, and Catholic priest, independently supported the idea of an expanding universe and proposed that it all began with a "primeval atom"—a concept now known as the Big Bang.</p>
+  <p>At the time, the scientific community believed the universe was static, so these ideas were revolutionary. Lemaître's theory provided a solid framework for a dynamic, evolving universe and laid the groundwork for modern cosmology. In 1951, the Catholic Church officially declared that the Big Bang theory aligns with the Bible’s concept of a divine creation, adding to its acceptance.</p>
+
+  <h2>EVIDENCE SUPPORTING THE BIG BANG THEORY</h2>
+  <p>There are three primary pieces of evidence that strongly support the Big Bang model:</p>
+  <ol>
+    <li><strong>Expansion of the Universe</strong><br>
+    Observations by Edwin Hubble in the late 1920s showed that galaxies are moving away from us, and the farther away a galaxy is, the faster it is receding. This implies that the universe is expanding, which supports the idea that it was once compacted into a single point.</li>
+    
+    <li><strong>Abundance of Light Elements</strong><br>
+    The Big Bang model accurately predicts the presence and abundance of light elements like helium, deuterium (an isotope of hydrogen), and lithium in the universe. These elements were formed during the first few minutes after the Big Bang in a process called Big Bang nucleosynthesis.</li>
+    
+    <li><strong>Cosmic Microwave Background Radiation (CMB)</strong><br>
+    In 1965, Arno Penzias and Robert Wilson discovered faint microwave radiation coming uniformly from all directions in space. This CMB is the residual heat from the Big Bang and serves as a snapshot of the infant universe, about 380,000 years after the event.</li>
+  </ol>
+
+  <h2>GALAXIES AND THE UNIVERSE</h2>
+  <p>A galaxy is a massive system consisting of billions of stars, along with clouds of gas and dust, all bound together by gravity. These vast structures are isolated from one another in space.</p>
+  <ul>
+    <li>It is estimated that there are around 100 billion galaxies (10¹¹) in the observable universe.</li>
+    <li>Each galaxy contains approximately 100 billion stars (10¹¹), making the estimated number of stars in the universe roughly 10²².</li>
+  </ul>
+
+  <h3>The Milky Way Galaxy</h3>
+  <ul>
+    <li>The Milky Way is the galaxy that houses our Solar System and the Earth.</li>
+    <li>It is a spiral-shaped galaxy that began forming around 8.8 billion years ago, roughly 5 billion years after the Big Bang.</li>
+    <li>The first person to observe the Milky Way through a telescope and realize it was made up of countless stars was Galileo Galilei in 1610.</li>
+  </ul>
+
+  <h3>The Andromeda Galaxy</h3>
+  <ul>
+    <li>Andromeda is the closest spiral galaxy to the Milky Way and is located about 2.5 million light-years away.</li>
+    <li>It is on a collision course with our galaxy and is expected to merge with the Milky Way in about 4.5 billion years, forming a new galaxy often referred to as Milkomeda.</li>
+  </ul>
+
+  <h3>Latest Known Galaxies</h3>
+  <ul>
+    <li>The Dwarf galaxies are among the smallest and most recently studied types of galaxies. Some, like the Segue 1 and Canis Major Dwarf Galaxy, have only been discovered in the 21st century due to their low brightness and small size.</li>
+  </ul>
+
+  <h2>MODERN VIEW: STRUCTURE OF THE UNIVERSE</h2>
+  <p>Today, the universe is understood to consist of:</p>
+  <ol>
+    <li>Atmosphere – The layer of gases surrounding planets like Earth.</li>
+    <li>Space (Outer Space) – The vast, seemingly infinite expanse that contains all galaxies, stars, planets, and cosmic matter.</li>
+  </ol>
+</section>
+
+
+        <div class="button-container">
+            <button onclick="window.location.href='arrival_of_danish_in_india.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".main-content").classList.toggle("sidebar-open");
+        });
+
+        const toggleButton = document.getElementById("toggleMode");
+        const modeIcon = document.getElementById("modeIcon");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        });
+    </script>
+</body>
+</html>
