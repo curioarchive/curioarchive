@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CurioArchive - Spain – Masters of the Westward Route</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.4s, color 0.4s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .dark-mode .navbar button {
+            background: #444;
+            color: white;
+        }
+
+        .dark-mode #searchInput {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .content-section {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .dark-mode footer {
+            background: #111;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 2;
+            transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar button#toggleMode {
+            font-size: 2.5em;
+            padding: 16px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 120px;
+            margin: 0 30px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+        .navbar button:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        #searchInput {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
+        }
+
+        .content-section {
+            background-color: white;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.8em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="indian_polity.html">Indian Polity</a></li>
+            <li><a href="#geography">Geography</a></li>
+            <li><a href="#astronomy">Astronomy</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#currentAffairs">Current Affairs</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#learningTamil">Learning Tamil</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="arivan_chat_bot.html">Arivan</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button>
+                <img src="curioarchivelogo.png" alt="CurioArchive Logo"/>
+                <h1>CurioArchive</h1>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search..."/>
+            <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
+        </nav>
+
+        <div class="button-container">
+            <button onclick="window.location.href='history_of_science_and_technology.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+  <section class="content-section">
+    <div class="image-container">
+        <img src="images/solarsystem.png" alt="Afonso de Albuquerque">
+    </div>
+   <h1>The Solar System</h1>
+  <ul>
+    <li>The solar system consists of the Sun, the eight planets and their satellites (or moons), and thousands of other smaller heavenly bodies such as asteroids, comets, and meteoroids.</li>
+    <li>The Sun is at the centre of the solar system, and all these bodies revolve around it.</li>
+    <li>The gravitational pull of the Sun keeps all the planets and other objects in orbit around it. Thus, the motion of all the members of the solar system is governed mainly by the gravitational force of the Sun.</li>
+    <li>Planets revolve around the Sun in elliptical orbits.</li>
+    <li>In the solar system, the planet nearest to the Sun is Mercury, and the planet farthest from the Sun is Neptune (not Pluto).</li>
+    <li>The size of the solar system has been estimated to be about 100,000 A.U. (not 105 A.U., which only reaches Neptune).</li>
+    <li>The solar system is dominated by the Sun, which accounts for almost 99.86% of the mass in the entire solar system.</li>
+    <li>The Sun is also the source of all the energy in the solar system.</li>
+    <li>Pluto is classified as a dwarf planet by the IAU (International Astronomical Union) since 2006.</li>
+    <li>Mercury, Venus, Earth, and Mars are called terrestrial planets, and Jupiter, Saturn, Uranus, and Neptune are called gas giants (Jupiter and Saturn) and ice giants (Uranus and Neptune).</li>
+  </ul>
+
+  <h1>The Sun</h1>
+  <ul>
+    <li>The Sun was formed when a swirling cloud of dust and gas contracted, pulling the matter into its centre. When the temperature at the centre rose to 10 million°C, nuclear fusion—the fusing of hydrogen into helium, creating energy—occurred, releasing a constant stream of heat and light. The Sun has the following layers:</li>
+  </ul>
+
+  <h2>The Core</h2>
+  <ul>
+    <li>The innermost layer of the Sun is the core. With a density of 150 g/cm³, about 150 times that of water, the core might be expected to be solid. However, the core's temperature of 15 million kelvins (27 million degrees Fahrenheit) keeps it in a plasma state.</li>
+    <li>In the core, fusion reactions produce energy in the form of gamma rays and neutrinos. Gamma rays are photons with high energy and high frequency. The gamma rays are absorbed and re-emitted by many atoms on their journey from the core to the surface. When the gamma rays leave atoms, their average energy is reduced. However, due to the first law of thermodynamics (which states that energy can neither be created nor destroyed), the energy is conserved but redistributed among a larger number of lower-energy photons.</li>
+    <li>A neutrino is an electrically neutral, weakly interacting elementary subatomic particle with half-integer spin. Neutrinos are not affected by the electromagnetic force and pass through most matter undisturbed. Neutrinos are created as a result of nuclear fusion reactions in the Sun. About 65 billion (6.5×10¹⁰) solar neutrinos per second pass through every square centimetre perpendicular to the direction of the Sun on Earth.</li>
+    <li>Neutrinos are extremely nonreactive. To stop a typical neutrino, it would require a wall of lead about one light-year thick! Experiments are conducted using large tanks filled with chemicals like perchloroethylene, which contains isotopes such as chlorine-37. These isotopes can interact with neutrinos to form argon-37, allowing scientists to detect and count the neutrino flux from the Sun.</li>
+  </ul>
+
+  <h2>Photosphere</h2>
+  <ul>
+    <li>The photosphere is the bright outer layer of the Sun that emits most of the radiation, particularly visible light. It consists of a zone of burning gases about 500 km thick (not 300 km). The effective temperature on the outer side of the photosphere is about 5778 K (5505°C or ~9900°F).</li>
+    <li>The photosphere is a comparatively thin layer of low-pressure gases. The composition, temperature, and pressure of the photosphere are revealed by the spectrum of sunlight. In fact, helium was first discovered in 1868 (not 1896) by Jules Janssen and Joseph Norman Lockyer, not William Ramsay, through spectral analysis of sunlight. The gas was named helium, after Helios, the Greek sun god.</li>
+  </ul>
+
+  <h2>Chromosphere</h2>
+  <ul>
+    <li>The chromosphere is the second of the three main layers in the Sun’s atmosphere and is approximately 2000–3000 km thick. Its density is only about 1/10,000 that of the photosphere.</li>
+    <li>The temperature first drops from 6000 K to about 3800 K, but then increases with altitude, rising to over 25,000–35,000 K near the top. This temperature rise leads into the transition region, which separates the chromosphere from the corona.</li>
+  </ul>
+
+  <h2>Sunspots</h2>
+  <ul>
+    <li>Sunspots are temporary dark spots on the photosphere, typically with diameters up to 50,000 km, roughly comparable to Earth's diameter. They are cooler than surrounding areas due to magnetic activity that inhibits convection.</li>
+    <li>The center of a spot, the umbra, appears dark and has a temperature around 4500 K. Surrounding it is the penumbra, which is lighter and slightly warmer.</li>
+    <li>Sunspots follow an approximately 11-year solar cycle, during which the number of sunspots increases and decreases.</li>
+    <li>The Sun's magnetic field is responsible for sunspots. Strong magnetic loops rise from the solar interior and suppress convection in localized areas, reducing surface temperature and causing darkening. The individual sunspot may last from a few days to a few months.</li>
+    <li>It is estimated that the Sun is slightly brighter (not dimmer) during sunspot maximum due to associated faculae, which are brighter areas that accompany sunspots and increase total solar irradiance.</li>
+  </ul>
+
+  <h2>Corona</h2>
+  <ul>
+    <li>The corona is the outermost layer of the Sun’s atmosphere. It is visible only during a total solar eclipse or through specialized instruments. It is composed of low-density plasma and extends millions of kilometres into space.</li>
+    <li>The average temperature of the corona is about 1 million K, though some regions can reach 3 million K.</li>
+    <li>This high temperature, despite the distance from the core, is still not fully understood but may be explained by magnetic reconnection and wave heating theories.</li>
+    <li>The corona emits X-rays and extreme ultraviolet radiation, despite being much fainter in visible light than the inner layers.</li>
+  </ul>
+
+  <h2>Solar Flares</h2>
+  <ul>
+    <li>Solar flares are intense bursts of radiation originating in the Sun's atmosphere, often near sunspots and regions of complex magnetic fields. These flares can be as large as Earth and may last for minutes to hours.</li>
+    <li>The temperature of solar flares can reach up to 10 million to 20 million K, emitting X-rays and gamma rays. These high-energy emissions interact with the corona’s gases, producing enhanced radiation and sometimes impacting Earth's ionosphere, causing radio blackouts and geomagnetic storms.</li>
+  </ul>
+<h1>Planets of the Solar System</h1>
+    <p>A celestial body moving in an elliptical orbit around a star is known as a planet. Planets are generally divided into: 
+        (i) the Inner Planets (Mercury, Venus, Earth, and Mars), and (ii) the Outer Planets (Jupiter, Saturn, Uranus, Neptune, and Pluto – a dwarf planet). 
+        Of course, icy giants are also a category within (ii).
+    </p>
+    <p>The four inner or terrestrial planets have dense, rocky compositions, few or no moons, and no ring systems. They are composed largely of refractory minerals, such as silicates, which form their crusts and mantles, and metals such as iron and nickel, which form their cores. Three of the four inner planets (Venus, Earth, and Mars) have atmospheres substantial enough to generate weather; all have impact craters and tectonic surface features such as rift valleys and volcanoes. The term "inner planet" should not be confused with "inferior planet," which designates those planets that are closer to the Sun than Earth is (i.e., Mercury and Venus).</p>
+
+    <p>The four outer planets, or gas giants (sometimes called Jovian planets), collectively make up 99% of the mass known to orbit the Sun. Jupiter and Saturn are each many tens of times the mass of Earth and consist overwhelmingly of hydrogen and helium; Uranus and Neptune are far less massive (&lt;20 Earth masses) and possess more ices in their makeup. For these reasons, some astronomers suggest they belong in their own category, "ice giants." All four gas giants have rings, although only Saturn's ring system is easily observed from Earth. The term "superior planet" designates planets outside Earth's orbit and thus includes both the outer planets and Mars.</p>
+
+    <div class="planet">
+        <h2>Mercury</h2>
+        <ul>
+            <li>Mercury is the closest planet to the Sun. It is an extremely hot planet. It is visible two hours before sunrise.</li>
+            <li>Its special feature is the presence of a magnetic field.</li>
+            <li>It is the smallest and lightest of all the planets. It has no moon.</li>
+            <li>The planet has no water on it.</li>
+            <li>Mercury has no gases like CO₂, N₂, H₂, and O₂ that can act as building blocks of life.</li>
+            <li>Mercury has no protective blanket like the Ozone layer to prevent us from harmful radiation.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Venus</h2>
+        <ul>
+            <li>Venus is the second planet in distance from the Sun. This planet is nearest to Earth and is also the brightest planet.</li>
+            <li>Venus is known as the 'Evening Star' as well as the 'Morning Star.'</li>
+            <li>Venus is surrounded by a thick cloud cover, hence known as the 'Veiled Planet' ('veil' means unclear/cover).</li>
+            <li>Venus is like Earth in size and mass, and hence also known as 'Earth's twin.' It also rotates clockwise like Uranus.</li>
+            <li>Venus is the hottest planet (even hotter than Mercury) in our Solar System, due to its veil of clouds.</li>
+            <li>Venus has no water on it. There is no sufficient oxygen on Venus.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Earth</h2>
+        <ul>
+            <li>The Earth is shaped like a ball, but it is not perfectly round. The force of the Earth's rotation makes the world bulge very slightly at the equator and go a little flat at the North and South poles. So, the Earth is actually a flattened sphere, or a 'geoid.'</li>
+            <li>The Earth is unique among the terrestrial planets (Mercury, Venus, Earth, and Mars) because of its size and distance from the Sun. Earth is unique in the Solar System in that it supports life: its size, gravitational pull, and distance from the Sun have all created the optimum conditions for the evolution of life. It is large enough to develop and retain an atmosphere and a hydrosphere. Temperature ranges on Earth are such that water can exist on its surface as liquid, solid, and gas. Water, more than anything else, makes Earth unique. The Earth is a delicate ball wrapped in filmy white clouds. The blue water and swirling patterns of clouds that dominate the scene underline the importance of water in the Earth's system. Thus, life on Earth can be considered an accidental outcome of a very lucky combination of several factors, all beyond the control of man!</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>The Moon</h2>
+        <ul>
+            <li>The Moon formed during a collision between Earth and another small planet called Theia. With the development of the space program, the Moon has become one of the best-understood planetary bodies in the Solar System. The Moon is the natural satellite of Earth, with a diameter of 3,474 km. The Moon is pockmarked with billions of craters, which range in size from microscopic pits on the surface of rock specimens to huge circular basins of hundreds of kilometers in diameter. Each of these must have been formed due to crashing bits of rock onto the Moon’s surface. The Moon rotates more slowly than Earth and takes a little over 27 days to rotate once. Since it takes about the same time to revolve around Earth, it always presents the same face or hemisphere to Earth. The interval between one full Moon and the next is 29.5 days. The Moon seems to have different shapes at different times of the month because of its changing position in relation to Earth. The different shapes are known as the phases of the Moon.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Mars</h2>
+        <ul>
+            <li>Mars is the fourth planet and the furthest terrestrial planet from the Sun.</li>
+            <li>The reddish color of its surface is due to finely grained iron(III) oxide dust in the soil, giving it the nickname "the Red Planet."</li>
+            <li>Mars's radius is second smallest among the planets in the Solar System at 3,389.5 km (2,106 mi).</li>
+            <li>The Martian dichotomy is visible on the surface: on average, the terrain on Mars's northern hemisphere is flatter and lower than its southern hemisphere.</li>
+            <li>Mars has a thin atmosphere made primarily of carbon dioxide, and two irregularly shaped natural satellites, Phobos and Deimos.</li>
+            <li>Phobos and Deimos are named after the Greek gods of fear.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Jupiter</h2>
+        <ul>
+            <li>Jupiter is the fifth planet from the Sun and the largest in the Solar System.</li>
+            <li>It is a gas giant with a mass more than two and a half times that of all the other planets in the Solar System combined, and slightly less than one one-thousandth the mass of the Sun. Jupiter orbits the Sun at a distance of 5.20 AU (778.5 Gm) with an orbital period of 11.86 years.</li>
+            <li>Jupiter is the third-brightest natural object in the Earth's night sky after the Moon and Venus, and it has been observed since prehistoric times.</li>
+            <li>It was named after Jupiter, the chief deity of ancient Roman religion.</li>
+            <li>Jupiter has 95 known natural satellites, and it is likely that this number will go up in the future due to improved instrumentation.</li>
+            <li>Of these, 79 are less than 10 km in diameter.</li>
+            <li>The four largest moons are Ganymede, Callisto, Io, and Europa (in order of decreasing size), collectively known as the "Galilean moons," and are visible from Earth with binoculars on a clear night.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Saturn</h2>
+        <ul>
+            <li>Saturn is the sixth planet from the Sun and the second-largest in the Solar System, after Jupiter.</li>
+            <li>It is a gas giant with an average radius of about nine-and-a-half times that of Earth.</li>
+            <li>It has only one-eighth the average density of Earth but is over 95 times more massive.</li>
+            <li>Saturn has 146 known moons.</li>
+            <li>Titan is the largest satellite.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Uranus</h2>
+        <ul>
+            <li>Uranus is the seventh planet from the Sun.</li>
+            <li>It is four times the size of Earth.</li>
+            <li>It is a gaseous, cyan-colored ice giant. Most of the planet is made of water, ammonia, and methane.</li>
+            <li>The planet's atmosphere has a complex layered cloud structure and has the lowest minimum temperature of 49 K (−224 °C; −371 °F) out of all the Solar System's planets.</li>
+            <li>It has a marked axial tilt of 97.8° with a retrograde rotation rate of 17 hours.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Neptune</h2>
+        <ul>
+            <li>Neptune is the eighth and farthest planet from the Sun.</li>
+            <li>It is the fourth-largest planet in the Solar System by diameter, the third-most-massive planet, and the densest giant planet.</li>
+            <li>The planet’s rich blue color comes from methane in its atmosphere.</li>
+        </ul>
+    </div>
+
+    <div class="planet">
+        <h2>Pluto</h2>
+        <ul>
+            <li>Pluto is a dwarf planet in the Kuiper belt, a ring of bodies beyond the orbit of Neptune.</li>
+            <li>It is the ninth-largest and tenth-most-massive known object to directly orbit the Sun.</li>
+            <li>Pluto is made primarily of ice and rock and is much smaller than the inner planets.</li>
+            <li>Pluto has only one-sixth the mass of Earth's Moon, and one-third its volume.</li>
+            <li>Pluto was recognized as a planet until 2006.</li>
+ <h2>Asteroids</h2>
+        <p>Asteroids are small Solar System bodies composed mainly of refractory rocky and metallic minerals, with some ice. The asteroid belt occupies the orbit between Mars and Jupiter, between 2.3 and 3.3 AU from the Sun. It is thought to be remnants from the Solar System's formation that failed to coalesce because of the gravitational interference of Jupiter.</p>
+        <p>Asteroids range in size from hundreds of kilometers across to microscopic. All asteroids, except the largest, Ceres, are classified as small Solar System bodies.</p>
+        <p>The asteroid belt contains tens of thousands, possibly millions, of objects over one kilometer in diameter. Despite this, the total mass of the asteroid belt is unlikely to be more than a thousandth of that of the Earth. The asteroid belt is very sparsely populated; spacecraft routinely pass through without incident. Asteroids with diameters up to 1 meter are called meteoroids. A meteoroid enters the Earth’s atmosphere, becomes a meteor, and if it reaches the surface, is called a meteorite.</p>
+    </div>
+
+    <div class="section">
+        <h2>Comets</h2>
+        <p>Comets are among the most spectacular and unpredictable bodies in the Solar System. They have been compared with large, dirty snowballs, since they are made of frozen gases (water, ammonia, methane, and carbon dioxide) which hold together small pieces of rocky and metallic minerals. Many comets travel along very elongated orbits that carry them beyond Pluto. On their return, the comets are visible only after they have moved within the orbit of Saturn.</p>
+        <p>One of the larger comets is Halley's Comet. The orbit of Halley's Comet brings it close to the Earth every 76 years. It last visited in 1986.</p>
+    </div>
+
+    <div class="section">
+        <h2>Meteoroids</h2>
+        <p>A meteoroid is a body of matter traveling at a great speed through space that becomes luminous when it enters the atmosphere (ionosphere) at about 200 km above the Earth's surface, because it is heated by friction. Generally, this latter process dissipates the material into meteoric dust. A meteor is popularly termed a 'shooting star' or 'falling star'.</p>
+    </div>
+
+    <div class="section">
+        <h2>Meteorite</h2>
+        <p>Any particle of solid matter that has fallen to the Earth, the Moon, or another planet from space. It is composed of various proportions of a nickel-iron alloy (typically about 10% nickel and about 90% iron) and silicate minerals.</p>
+        <p>A meteor crater in Arizona (USA), which is 4,200 feet (1,300 meters) deep, is the largest meteor crater in the world. It was formed over 10,000 years ago.</p>
+    </div>
+
+</section>
+
+
+        <div class="button-container">
+            <button onclick="window.location.href='arrival_of_danish_in_india.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".main-content").classList.toggle("sidebar-open");
+        });
+
+        const toggleButton = document.getElementById("toggleMode");
+        const modeIcon = document.getElementById("modeIcon");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        });
+    </script>
+</body>
+</html>
