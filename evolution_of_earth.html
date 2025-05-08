@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CurioArchive - evolution of earth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            transition: background 0.4s, color 0.4s;
+            display: flex;
+        }
+        .dark-mode {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .dark-mode .navbar button {
+            background: #444;
+            color: white;
+        }
+
+        .dark-mode #searchInput {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .content-section {
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .dark-mode footer {
+            background: #111;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #222;
+            color: white;
+            padding: 30px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            transition: background 0.3s;
+            border-bottom: 1px solid #333;
+        }
+        .sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 2;
+            transition: margin-left 0.4s ease-in-out;
+            padding-bottom: 50px;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: white;
+            color: black;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar button#toggleMode {
+            font-size: 2.5em;
+            padding: 16px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 120px;
+            margin: 0 30px;
+        }
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+        .navbar button {
+            background: white;
+            color: black;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+        .navbar button:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        #searchInput {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 400px;
+            transition: width 0.3s ease;
+        }
+        #searchInput:focus {
+            width: 450px;
+            outline: none;
+        }
+
+        .content-section {
+            background-color: white;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 1.8;
+        }
+        h2, h3, h4 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 0px;
+            border-top: 1px solid #333;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .back-button, .next-button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-button i, .next-button i {
+            font-size: 1.8em;
+        }
+
+        .back-button:hover, .next-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .back-button:focus, .next-button:focus {
+            outline: none;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+        }
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="indian_polity.html">Indian Polity</a></li>
+            <li><a href="#geography">Geography</a></li>
+            <li><a href="#astronomy">Astronomy</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#currentAffairs">Current Affairs</a></li>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#learningTamil">Learning Tamil</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="arivan_chat_bot.html">Arivan</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <nav class="navbar">
+            <div class="logo">
+                <button id="toggleSidebar">☰</button>
+                <img src="curioarchivelogo.png" alt="CurioArchive Logo"/>
+                <h1>CurioArchive</h1>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search..."/>
+            <button id="toggleMode"><i id="modeIcon" class="fas fa-moon"></i></button>
+        </nav>
+
+        <div class="button-container">
+            <button onclick="window.location.href='the_solar_system.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+  <section class="content-section">
+    <div class="image-container">
+        <img src="images/evolution_of_earth.png" alt="Afonso de Albuquerque">
+    </div>
+   <h1>HISTORY OF EARTH AND EXTINCTION EVENTS</h1>
+
+  <h2>The Birth of the Universe and Earth</h2>
+  <p>The Universe was formed around 13.8 billion years ago (1380 crore years), during the Big Bang — a singularity event that marked the beginning of time, space, and matter.</p>
+  <p>Our Earth came into existence much later, around 4.5 billion years ago (450 crore years), forming from the debris and dust surrounding the young Sun.</p>
+  <p>The Moon is believed to have formed from a colossal collision between early Earth and a Mars-sized body named Theia. The resulting debris eventually coalesced to form the Moon.</p>
+
+  <h2>PRECAMBRIAN TIME</h2>
+  <p>This spans most of Earth's history, from its formation to about 539 million years ago. Life started here, though very primitive and microscopic.</p>
+
+  <h3>Hadean Period (Up to 400 crore years ago)</h3>
+<div class="image-container">
+        <img src="images/hadean_period.png" alt="Afonso de Albuquerque">
+    </div>
+  <ul>
+    <li>Earth's surface was a hellish inferno, filled with molten rock, flowing lava, volcanic eruptions, and no solid crust.</li>
+    <li>The atmosphere was toxic, filled with carbon dioxide (CO₂), nitrogen, sulfur, and no oxygen. It was unbreathable and incredibly hot.</li>
+    <li>However, scientists have found ancient minerals like zircon crystals that suggest the presence of liquid water even during this early chaos.</li>
+    <li>Frequent asteroid showers bombarded the Earth, possibly bringing essential elements or even water.</li>
+    <li>The Sun was about 30% dimmer than today, yet Earth remained hot due to intense greenhouse gases.</li>
+    <li>Named after Hades, the Greek god of the underworld, this period truly resembled hell.</li>
+  </ul>
+
+  <h3>Eoarchean (Up to 360 crore years ago)</h3>
+<div class="image-container">
+        <img src="images/Eoarchean.png" alt="Afonso de Albuquerque">
+    </div>
+  <ul>
+    <li>Earth's surface began to cool. Heavy rain fell for millions of years, slowly forming the first oceans.</li>
+    <li>Life may have originated here in deep-sea hydrothermal vents, where mineral-rich, boiling water provided the right environment for chemical reactions to build early life.</li>
+  </ul>
+
+  <h3>Paleoarchean (Up to 320 crore years ago)</h3>
+
+  <ul>
+    <li>Most of the planet was covered by ocean, but hidden below, early supercontinents were beginning to form.</li>
+    <li>We find the first clear evidence of life: Stromatolites — layered sedimentary rocks built by colonies of cyanobacteria.</li>
+    <li>These cyanobacteria began to perform photosynthesis, slowly using sunlight to create food and releasing oxygen as a byproduct. Life was starting to "eat the Sun."</li>
+  </ul>
+
+  <h3>Mesoarchean (Up to 280 crore years ago)</h3>
+  <ul>
+    <li>Continents started becoming visible. Plate tectonics caused landmasses to crash and shift.</li>
+    <li>Oceans were extremely hot (over 40°C), and microbial life thrived in every corner.</li>
+    <li>Without plants to consume CO₂, the atmosphere was packed with greenhouse gases. It was a lethal sauna for any modern life form.</li>
+    <li>Still no oxygen to breathe — only microbial life existed.</li>
+  </ul>
+
+  <h3>Neoarchean (Up to 250 crore years ago)</h3>
+  <ul>
+    <li>Earth was becoming more stable — temperatures were dropping slowly, and oceans had calmed.</li>
+    <li>Around this time, more advanced prokaryotes (simple cells without nuclei) like bacteria started spreading.</li>
+    <li>Still, life remained unicellular — tiny organisms in the vast oceans.</li>
+  </ul>
+
+  <h2>Proterozoic Eon: Where Things Change Slowly But Monumentally</h2>
+
+  <h3>Siderian (Up to 230 crore years ago)</h3>
+<div class="image-container">
+        <img src="images/Siderian.jfif" alt="Afonso de Albuquerque">
+    </div>
+  <ul>
+    <li>The Great Oxidation Event occurred.</li>
+    <li>Cyanobacteria released so much oxygen that it flooded the atmosphere. But at first, this oxygen reacted with methane (a powerful greenhouse gas), turning it into CO₂ and water.</li>
+    <li>This reduced greenhouse warming drastically and triggered the first global glaciation — Earth froze over in what's known as the Snowball Earth event.</li>
+    <li>This ice age lasted millions of years and was devastating for many anaerobic life forms.</li>
+  </ul>
+
+  <h3>Rhyacian (Up to 205 crore years ago)</h3>
+  <ul>
+    <li>Volcanic activity started melting the ice, warming the atmosphere with CO₂ again.</li>
+    <li>This was a critical recovery period where the Earth slowly thawed.</li>
+  </ul>
+
+  <h3>Orosirian (Up to 180 crore years ago)</h3>
+  <ul>
+    <li>A massive asteroid created the largest impact structure still known on Earth.</li>
+    <li>Tectonic plates collided, creating huge mountain ranges and beginning the process of large-scale land formation.</li>
+  </ul>
+
+  <h3>Statherian (Up to 160 crore years ago)</h3>
+  <ul>
+    <li>One of Earth’s first supercontinents, Columbia, formed by the merging of large landmasses.</li>
+  </ul>
+
+  <h3>Calymmian (Up to 140 crore years ago)</h3>
+  <ul>
+    <li>A major moment in biological history: the first eukaryotic cells appeared — these had a nucleus and organelles.</li>
+    <li>This happened when one cell engulfed another, creating a symbiotic relationship. These became the ancestors of all complex life, including plants, animals, and fungi.</li>
+  </ul>
+
+  <h3>Ectasian (Up to 120 crore years ago)</h3>
+  <ul>
+    <li>Earth’s inner core began to solidify, forming a solid iron crystal at the center surrounded by molten metal.</li>
+    <li>This improved Earth’s magnetic field, which helped protect life from harmful solar radiation.</li>
+  </ul>
+
+  <h3>Stenian (Up to 100 crore years ago)</h3>
+  <ul>
+    <li>Sexual reproduction might have evolved here, thanks to red algae called Bangiomorpha pubescens.</li>
+    <li>This led to genetic diversity, a powerful fuel for evolution.</li>
+  </ul>
+
+  <h3>Tonian (Up to 72 crore years ago)</h3>
+  <ul>
+    <li>Prokaryotes and eukaryotes were in an evolutionary arms race.</li>
+    <li>Life remained microscopic, and Earth was still quiet on the surface.</li>
+  </ul>
+
+  <h3>Cryogenian (Up to 63.5 crore years ago)</h3>
+  <ul>
+    <li>Another Snowball Earth — one of the coldest periods in Earth’s history.</li>
+    <li>Ice covered much of the planet again, but some microbes may have survived near hydrothermal vents.</li>
+  </ul>
+
+  <h3>Ediacaran (Up to 53.9 crore years ago)</h3>
+  <ul>
+    <li>The supercontinent Gondwana was formed.</li>
+    <li>Life suddenly became larger — the first multicellular organisms appeared, growing into visible sizes.</li>
+    <li>This was the calm before a biological storm.</li>
+  </ul>
+
+  <h2>PALEOZOIC ERA: Life Takes Over</h2>
+
+  <h3>Cambrian (Up to 48.5 crore years ago)</h3>
+<div class="image-container">
+        <img src="images/cambrian.jfif" alt="Afonso de Albuquerque">
+    </div>
+  <ul>
+    <li>Cambrian Explosion: Life diversified explosively.</li>
+    <li>Many major animal body plans appeared: arthropods, mollusks, early vertebrates.</li>
+    <li>Plants started their journey onto land.</li>
+  </ul>
+
+  <h3>Ordovician (Up to 44.4 crore years ago)</h3>
+  <ul>
+    <li>Rich marine biodiversity, but ended with a mass extinction, wiping out around 85% of species.</li>
+  </ul>
+
+  <h3>Silurian (Up to 41.9 crore years ago)</h3>
+  <ul>
+    <li>Plants colonized land more widely.</li>
+    <li>Soil began forming, and plants consumed large amounts of CO₂, altering the atmosphere.</li>
+  </ul>
+
+  <h3>Devonian (Up to 36 crore years ago)</h3>
+  <ul>
+    <li>Age of fishes, first forests, and amphibians.</li>
+    <li>Life was fully adapting to land environments.</li>
+  </ul>
+
+  <h3>Carboniferous (Up to 30 crore years ago)</h3>
+<div class="image-container">
+        <img src="images/Carboniferous.jfif" alt="Afonso de Albuquerque">
+    </div>
+  <ul>
+    <li>Giant forests, swamps, and insects ruled the Earth.</li>
+    <li>Organic material from this era would eventually turn into coal, which we burn today.</li>
+    <li>Oxygen levels were very high, supporting giant insects like dragonflies the size of birds.</li>
+  </ul>
+
+  <h3>Permian (Up to 25 crore years ago)</h3>
+  <ul>
+    <li>Formation of Pangea, the last supercontinent.</li>
+    <li>Ends with the biggest mass extinction in Earth's history — over 90% of marine species and 70% of terrestrial species vanished.</li>
+  </ul>
+
+  <h2>MESOZOIC ERA: The Age of Reptiles</h2>
+
+  <h3>Triassic (Up to 20 crore years ago)</h3>
+  <ul>
+    <li>Dinosaurs emerged and began diversifying.</li>
+    <li>Mammal-like reptiles also coexisted.</li>
+  </ul>
+
+  <h3>Jurassic (Up to 14.5 crore years ago)</h3>
+  <ul>
+    <li>Dinosaurs dominated land.</li>
+    <li>First birds appeared — evolved from feathered dinosaurs.</li>
+    <li>Warm and humid climate.</li>
+  </ul>
+
+  <h3>Cretaceous (Up to 6.6 crore years ago)</h3>
+  <ul>
+    <li>Flowering plants evolved.</li>
+    <li>Dinosaurs flourished until a massive asteroid impact near modern-day Mexico caused the Cretaceous-Paleogene extinction.</li>
+  </ul>
+
+  <h2>CENOZOIC ERA: The Age of Mammals</h2>
+
+  <h3>Paleogene (Up to 2.3 crore years ago)</h3>
+  <ul>
+    <li>Mammals diversified rapidly, taking over many ecological roles.</li>
+    <li>Continents began shifting into modern positions.</li>
+    <li>First primates evolved.</li>
+  </ul>
+
+  <h3>Quaternary (2.3 crore years ago – Present)</h3>
+  <ul>
+    <li>Marked by multiple ice ages and the rise of humans.</li>
+    <li>Homo sapiens emerged around 3 lakh years ago, transforming the planet through culture, agriculture, and technology.</li>
+  </ul>
+<h1>THE BIG FIVE MASS EXTINCTIONS</h1>
+  <p>Each of these events wiped out a huge percentage of Earth's life, reshaped ecosystems, and opened the door for new forms of life to evolve.</p>
+
+  <h2> 1. End-Ordovician Extinction</h2>
+  <ul>
+    <li> Around 444 million years ago</li>
+    <li> Species lost: ~85% of marine species</li>
+    <li> Life at the time: Mostly in the oceans — trilobites, corals, and brachiopods were dominant.</li>
+  </ul>
+  <h3> Cause:</h3>
+  <p>A sudden ice age likely triggered by the uplift of the Appalachian Mountains and weathering of silicate rocks, which pulled CO₂ from the atmosphere.</p>
+  <p>Massive glaciation caused sea levels to drop, eliminating shallow marine habitats.</p>
+  <h3> Impact:</h3>
+  <p>The first major extinction event.</p>
+  <p>Heavily affected reef-building organisms and shallow-water marine communities.</p>
+  <p>Life rebounded over millions of years as the climate warmed again.</p>
+
+  <h2> 2. Late Devonian Extinction</h2>
+  <ul>
+    <li> Around 360–375 million years ago</li>
+    <li> Species lost: ~75% of marine species</li>
+    <li> Life at the time: Coral reefs were thriving, early fish were diversifying, and the first forests were appearing.</li>
+  </ul>
+  <h3> Causes (multiple and debated):</h3>
+  <ul>
+    <li>Widespread anoxia (lack of oxygen) in oceans due to decaying plants and nutrient runoff.</li>
+    <li>Massive plant growth on land changed soil and atmospheric chemistry.</li>
+    <li>Possibly triggered by asteroid impacts or volcanic eruptions.</li>
+  </ul>
+  <h3> Impact:</h3>
+  <p>Coral reefs collapsed and disappeared for 100 million years.</p>
+  <p>Devastated marine life, especially jawless fish and reef dwellers.</p>
+  <p>Land plants and insects survived relatively well.</p>
+  <p>Recovery was slow and gradual.</p>
+
+  <h2> 3. End-Permian Extinction ("The Great Dying")</h2>
+  <ul>
+    <li> Around 252 million years ago</li>
+    <li> Species lost: ~96% of marine species, ~70% of terrestrial vertebrates</li>
+    <li> Life at the time: A mix of advanced marine life (ammonites, trilobites) and early land reptiles and plants.</li>
+  </ul>
+  <h3> Cause:</h3>
+  <ul>
+    <li>Catastrophic volcanic eruptions in Siberia (Siberian Traps) released massive amounts of CO₂ and methane.</li>
+    <li>Triggered runaway global warming, acid rain, and ocean acidification.</li>
+    <li>Oxygen levels in the ocean plummeted, killing marine life.</li>
+    <li>Global temperatures rose ~8°C.</li>
+  </ul>
+  <h3>⚠️ Impact:</h3>
+  <p>Most severe extinction in Earth's history.</p>
+  <p>Entire groups like trilobites vanished forever.</p>
+  <p>Ecosystems collapsed; it took over 10 million years to fully recover.</p>
+  <p>Paved the way for the rise of dinosaurs and new life forms in the Triassic.</p>
+
+  <h2> 4. End-Triassic Extinction</h2>
+  <ul>
+    <li> Around 200 million years ago</li>
+    <li> Species lost: ~80% of species</li>
+    <li> Life at the time: Marine reptiles, amphibians, early dinosaurs, and conifer forests.</li>
+  </ul>
+  <h3> Cause:</h3>
+  <p>Volcanic activity from the break-up of the supercontinent Pangaea (Central Atlantic Magmatic Province).</p>
+  <p>Released massive greenhouse gases like CO₂ → rapid climate warming and ocean acidification.</p>
+  <h3> Impact:</h3>
+  <p>Many large amphibians and reptiles went extinct.</p>
+  <p>Dinosaurs survived and rapidly diversified, dominating the Jurassic era.</p>
+  <p>Modern coral reef systems eventually appeared in the aftermath.</p>
+
+  <h2> 5. End-Cretaceous Extinction (K-Pg Event)</h2>
+  <ul>
+    <li> Around 66 million years ago</li>
+    <li> Species lost: ~75% of species</li>
+    <li> Life at the time: Dinosaurs ruled the land, seas full of marine reptiles, ammonites, and primitive mammals.</li>
+  </ul>
+  <h3> Cause:</h3>
+  <ul>
+    <li>A 10 km-wide asteroid struck the Yucatán Peninsula (Chicxulub crater in Mexico).</li>
+    <li>Created massive shockwaves, wildfires, global darkness from atmospheric dust, and nuclear winter-like conditions.</li>
+    <li>Possible contribution from volcanic eruptions in India (Deccan Traps).</li>
+  </ul>
+  <h3> Impact:</h3>
+  <p>All non-avian dinosaurs went extinct.</p>
+  <p>Many marine reptiles, ammonites, and plants also disappeared.</p>
+  <p>Mammals survived and diversified, eventually leading to primates and humans.</p>
+
+</section>
+
+
+        <div class="button-container">
+            <button onclick="window.location.href='the_solar_system.html'" class="back-button"><i class="fas fa-arrow-left"></i> </button>
+            <button onclick="window.location.href='.html'" class="next-button"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <footer>
+            <p>© 2025 CurioArchive. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".main-content").classList.toggle("sidebar-open");
+        });
+
+        const toggleButton = document.getElementById("toggleMode");
+        const modeIcon = document.getElementById("modeIcon");
+        toggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        });
+    </script>
+</body>
+</html>
