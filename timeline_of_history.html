@@ -196,16 +196,16 @@
                 transform: scale(1);
             }
         }
-        .category:nth-child(1) { background-image: url('images/history_of_the_universe.png'); }
-        .category:nth-child(2) { background-image: url('images/the_solar_system.png'); }
-        .category:nth-child(3) { background-image: url('images/evolution_of_earth.png'); }
-        .category:nth-child(4) { background-image: url('images/.png'); }
-        .category:nth-child(5) { background-image: url('images/.png'); }
-        .category:nth-child(6) { background-image: url('images/.png'); }
-        .category:nth-child(7) { background-image: url('images/.png'); }
-        .category:nth-child(8) { background-image: url('images/.png'); }
-        .category:nth-child(9) { background-image: url('images/.png'); }
-        .category:nth-child(10) { background-image: url('images/.jpg'); }
+        .category:nth-child(1) { background-image: url('images/out_of_africa.png'); }
+        .category:nth-child(2) { background-image: url('images/prehistoric_india.png'); }
+        .category:nth-child(3) { background-image: url('images/arrival_of_aryans.png'); }
+        .category:nth-child(4) { background-image: url('images/vedic_age.png'); }
+        .category:nth-child(5) { background-image: url('images/the_age_of_mahajanapadas.png'); }
+        .category:nth-child(6) { background-image: url('images/pre_mauryan_age.png'); }
+        .category:nth-child(7) { background-image: url('images/mauryan_age.png'); }
+        .category:nth-child(8) { background-image: url('images/post_mauryan_age.png'); }
+        .category:nth-child(9)  { background-image: url('images/gupta_age.png'); }
+        .category:nth-child(10) { background-image: url('images/vakataka.jpg'); }
 
         .social-media {
             text-align: center;
@@ -256,18 +256,119 @@
             font-size: 3em;
         }
         .back-button-container {
-          padding: 10px 40px;
-          background: white;
-          display: flex;
-          justify-content: flex-start;
+            padding: 10px 40px;
+            background: white;
+            display: flex;
+            justify-content: flex-start;
         }
         .back-button {
-          background: none;
-          border: none;
-          font-size: 1.5em;
-          cursor: pointer;
-          text-decoration: none;
-          color: black;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Timeline Styles */
+        :root {
+            --primary: #2563eb;
+            --background: #f3f4f6;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --timeline-line: #d1d5db;
+            --text-dark: #111827;
+            --text-muted: #6b7280;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .timeline {
+            position: relative;
+            border-left: 3px solid var(--timeline-line);
+            padding-left: 2rem;
+        }
+
+        .event {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .event:hover {
+            transform: translateX(4px);
+        }
+
+        .event::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: -1.25rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #e0e7ff;
+        }
+
+        .card {
+            display: block;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .year {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .description {
+            color: #374151;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -306,25 +407,11 @@
         <div class="back-button-container">
             <a href="history.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
         </div>
-
-        <div class="categories-container">
-            <h2 class="categories-heading">HISTORY OF SCIENCE AND TECHNOLOGY</h2>
-            <section class="categories">
-                <a href="history_of_the_universe.html" class="category"></a>
-                <a href="the_solar_system.html" class="category"></a>
-                <a href="evolution_of_earth.html" class="category"></a>
-                <a href="#history_of_vedic_age" class="category">4</a>
-                <a href="#the_age_of_mahajanapadas" class="category">5</a>
-                <a href="#pre_mauryan_age" class="category">6</a>
-                <a href="#mauryan_age" class="category">7</a>
-                <a href="#post_mauryan_age" class="category">8</a>
-                <a href="#gupta_age" class="category">9</a>
-                <a href="#vakataka" class="category">10</a>
-
-            </section>
+        <div class="container">
+            <h1>History Timeline</h1>
+            <div class="timeline" id="timeline"></div>
         </div>
-
-        <div class="social-media">
+<div class="social-media">
             <p>Follow Us On:</p>
             <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -358,6 +445,54 @@
 
         document.getElementById("searchInput").addEventListener("input", function () {
             // search input is still present, but without any category boxes to filter.
+        });
+
+        const timelineData = [
+            {
+                year: "13.8 billion years ago",
+                title: "Formation of Universe",
+                description: "",
+                link: "history_of_the_universe.html"
+            },
+            {
+                year: "4.6 billion years ago",
+                title: "The Solar System",
+                description: "",
+                link: "the_solar_system.html"
+            },
+            {
+                year: "1492",
+                title: "Columbus Discovers the Americas",
+                description: "Christopher Columbus lands in the New World, initiating widespread European exploration.",
+                link: "#columbus"
+            },
+            {
+                year: "1789",
+                title: "French Revolution",
+                description: "A period of radical social and political change in France that had a lasting impact on world history.",
+                link: "#french-revolution"
+            },
+            {
+                year: "1945",
+                title: "End of World War II",
+                description: "The Allied victory marked the end of the deadliest conflict in human history and the beginning of the Cold War.",
+                link: "#ww2-end"
+            }
+        ];
+
+        const timelineContainer = document.getElementById('timeline');
+
+        timelineData.forEach(event => {
+            const eventEl = document.createElement('div');
+            eventEl.className = 'event';
+            eventEl.innerHTML = `
+                <a href="${event.link}" class="card">
+                <p class="year">${event.year}</p>
+                <h2 class="title">${event.title}</h2>
+                <p class="description">${event.description}</p>
+                </a>
+            `;
+            timelineContainer.appendChild(eventEl);
         });
     </script>
 </body>
